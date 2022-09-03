@@ -1,15 +1,10 @@
 import { Link } from "react-router-dom";
 function Home() {
     return (
-        <div>
-            <h1>ConsulPet</h1>
-            <nav style={{
-                 borderBottom: "solid 1px",
-                 paddingBottom: "1rem",
-            }}>
-                <Link to="/consulpet/agenda">Agenda</Link> |{" "}
-            </nav>
-        </div>
+        <div style="width: 100%; overflow: hidden;">
+        <div style="width: 600px; float: left;"> Left </div>
+        <div style="margin-left: 620px;"> Right </div>
+   </div>
     );
   }
   
