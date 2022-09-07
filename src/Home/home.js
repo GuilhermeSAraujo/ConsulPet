@@ -17,7 +17,6 @@ function Home() {
   const onSubmit = (data) => console.log(data);
 
   const handleNome = (value) => {
-    console.log(value.target.value);
     setNome(value);
   }
 
@@ -68,7 +67,7 @@ function Home() {
             <Typography variant='h5' fontWeight={400} sx={{ marginBottom: '1.5rem' }}>Agende seu horário</Typography>
             <Stack spacing={3}>
               <FormControl>
-                <TextField type='text' label="Nome completo" value={nome} onChange={handleNome} />
+                <TextField type='text' label="Nome completo" value={nome} onChange={(e) => handleNome(e.target.value)} />
               </FormControl>
               <FormControl>
                 <DateTimePicker
