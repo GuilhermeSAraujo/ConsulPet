@@ -1,16 +1,14 @@
 {
   "files": {
-    "main.css": "/consulpet/static/css/main.073c9b0a.css",
-    "main.js": "/consulpet/static/js/main.617e8f2c.js",
-    "static/js/787.81e76983.chunk.js": "/consulpet/static/js/787.81e76983.chunk.js",
-    "static/media/logo.svg": "/consulpet/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "main.css": "/consulpet/static/css/main.cea6a545.css",
+    "main.js": "/consulpet/static/js/main.4c744c29.js",
+    "static/media/dogTitulo.svg": "/consulpet/static/media/dogTitulo.f1780b72cd1cdf33d83854703bc30368.svg",
     "index.html": "/consulpet/index.html",
-    "main.073c9b0a.css.map": "/consulpet/static/css/main.073c9b0a.css.map",
-    "main.617e8f2c.js.map": "/consulpet/static/js/main.617e8f2c.js.map",
-    "787.81e76983.chunk.js.map": "/consulpet/static/js/787.81e76983.chunk.js.map"
+    "main.cea6a545.css.map": "/consulpet/static/css/main.cea6a545.css.map",
+    "main.4c744c29.js.map": "/consulpet/static/js/main.4c744c29.js.map"
   },
   "entrypoints": [
-    "static/css/main.073c9b0a.css",
-    "static/js/main.617e8f2c.js"
+    "static/css/main.cea6a545.css",
+    "static/js/main.4c744c29.js"
   ]
 }
