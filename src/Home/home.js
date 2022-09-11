@@ -15,15 +15,20 @@ import dayjs from "dayjs";
 function Home() {
   const [porte, setPorte] = useState('');
   const [servico, setServico] = useState('');
-  const [nome, setNome] = useState("");
+  const [pet, setPet] = useState("");
   const [data, setData] = useState(dayjs());
+  const [banho, setBanho] = useState(false);
+  const [tosa, setTosa] = useState(false);
+  const [desembaracamento, setDesembaracamento] = useState(false);
+  const [corteUnhas, setCorteUnhas] = useState(false);
+  const [hidratacao, setHidratacao] = useState(false);
+  const [consulta, setConsulta] = useState(false);
+  const [vacinacao, setVacinacao] = useState(false);
+  const [passeio, setPasseio] = useState(false);
+  const [adestramento, setAdestramento] = useState(false);
+
   const debouncedData = useDebounce(data, 5000);
-
   const onSubmit = (data) => console.log(data);
-
-  const handleNome = (value) => {
-    setNome(value);
-  }
 
   const handlePorte = (e) => {
     setPorte(e.target.value);
@@ -38,9 +43,10 @@ function Home() {
     }
   };
 
-  const handleDisableCheckbox = () => {
-   return true;
+  const handlePet = () => {
+    console.log('123');
   }
+
   // /^[a-zA-Z ]{2,30}$/
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -71,27 +77,32 @@ function Home() {
           marginTop: '8vh',
           textAlign: 'center',
         }}>
-          <Box 
-          sx={{
-            backgroundColor: '#d3f2d3',
-            paddingTop: '20px',
-            paddingBottom: '25px',
-            borderRadius: '10%',
-            paddingRight: '15%',
-            paddingLeft: '15%',
-            boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px'
-          }}>
+          <Box
+            sx={{
+              backgroundColor: '#d3f2d3',
+              paddingTop: '20px',
+              paddingBottom: '25px',
+              borderRadius: '10%',
+              paddingRight: '15%',
+              paddingLeft: '15%',
+              boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px'
+            }}>
             <Typography variant='h5' fontWeight={400} sx={{ marginBottom: '1.5rem', letterSpacing: '2px' }}>Agende seu horário</Typography>
             <Stack spacing={3}>
               <FormControl>
-                <TextField type='text' label="Nome completo" value={nome} onChange={(e) => handleNome(e.target.value)}  
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <PersonIcon />
-                    </InputAdornment>
-                  ),
-                }} />
+                <InputLabel id="labelPet">Escolha seu pet</InputLabel>
+                <Select
+                  value={pet}
+                  label="Escolha seu pet"
+                  labelId="labelPet"
+                  onChange={handlePet}
+                  sx={{ textAlign: 'left' }}
+
+                >
+                  <MenuItem value={encontraPorte(1)}>{encontraPorte(1).nome}</MenuItem>
+                  <MenuItem value={encontraPorte(2)}>{encontraPorte(2).nome}</MenuItem>
+                  <MenuItem value={encontraPorte(3)}>{encontraPorte(3).nome}</MenuItem>
+                </Select>
               </FormControl>
               <FormControl>
                 <DateTimePicker
@@ -123,7 +134,7 @@ function Home() {
                 </Select>
               </FormControl>
               <FormControl >
-              <InputLabel id="labelServico">Serviço</InputLabel>
+                <InputLabel id="labelServico">Serviço</InputLabel>
                 <Select
                   value={servico}
                   label="Serviço"
@@ -138,25 +149,25 @@ function Home() {
                     </InputAdornment>
                   }
                 >
-                  <MenuItem value={encontraServico(1)}>{encontraServico(1).nome}</MenuItem>
                   <MenuItem value={encontraServico(2)}>{encontraServico(2).nome}</MenuItem>
+                  <MenuItem value={encontraServico(1)}>{encontraServico(1).nome}</MenuItem>
                   <MenuItem value={encontraServico(3)}>{encontraServico(3).nome}</MenuItem>
                 </Select>
               </FormControl>
               <FormGroup sx={{
                 display: 'table-row-group'
               }}>
-                <FormControlLabel control={<Checkbox disabled={true} />} label="Banho" />
-                <FormControlLabel control={<Checkbox />} label="Tosa" />
-                <FormControlLabel control={<Checkbox />} label="Desembaraçamento" />
-                <FormControlLabel control={<Checkbox />} label="Corte de unhas" />
-                <FormControlLabel control={<Checkbox />} label="Hidratação" />
-                <FormControlLabel control={<Checkbox />} label="Consulta" />
-                <FormControlLabel control={<Checkbox />} label="Vacinação" />
-                <FormControlLabel control={<Checkbox />} label="Passeio" />
-                <FormControlLabel control={<Checkbox />} label="Adestramento" />
+                <FormControlLabel control={<Checkbox disabled={servico.valor !== 2} value={banho} onClick={() => setBanho(!banho)} />} label="Banho" />
+                <FormControlLabel control={<Checkbox disabled={servico.valor !== 2} value={tosa} onClick={() => setTosa(!tosa)} />} label="Tosa" />
+                <FormControlLabel control={<Checkbox disabled={servico.valor !== 2} value={desembaracamento} onClick={() => setDesembaracamento(!desembaracamento)} />} label="Desembaraçamento" />
+                <FormControlLabel control={<Checkbox disabled={servico.valor !== 2} value={corteUnhas} onClick={() => setCorteUnhas(!corteUnhas)} />} label="Corte de unhas" />
+                <FormControlLabel control={<Checkbox disabled={servico.valor !== 2} value={hidratacao} onClick={() => setHidratacao(!hidratacao)} />} label="Hidratação" />
+                <FormControlLabel control={<Checkbox disabled={servico.valor !== 1} value={consulta} onClick={() => setConsulta(!consulta)} />} label="Consulta" />
+                <FormControlLabel control={<Checkbox disabled={servico.valor !== 1} value={vacinacao} onClick={() => setVacinacao(!vacinacao)} />} label="Vacinação" />
+                <FormControlLabel control={<Checkbox disabled={servico.valor !== 3} value={passeio} onClick={() => setPasseio(!passeio)} />} label="Passeio" />
+                <FormControlLabel control={<Checkbox disabled={servico.valor !== 3} val ue={adestramento} onClick={() => setAdestramento(!adestramento)} />} label="Adestramento" />
               </FormGroup>
-              <Button color="primary" onClick={onSubmit} sx={{marginTop: '15px', borderRadius: '10%', color: 'darkblue', backgroundColor: '#c4e3cd'}}>Enviar</Button>
+              <Button color="primary" onClick={onSubmit} sx={{ marginTop: '15px', borderRadius: '10%', color: 'darkblue', backgroundColor: '#c4e3cd' }}>Enviar</Button>
             </Stack>
           </Box>
         </Grid>
