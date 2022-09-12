@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/consulpet/home/static/css/main.cea6a545.css",
-    "main.js": "/consulpet/home/static/js/main.6a596e9f.js",
-    "static/media/dogTitulo.svg": "/consulpet/home/static/media/dogTitulo.f1780b72cd1cdf33d83854703bc30368.svg",
-    "index.html": "/consulpet/home/index.html",
-    "main.cea6a545.css.map": "/consulpet/home/static/css/main.cea6a545.css.map",
-    "main.6a596e9f.js.map": "/consulpet/home/static/js/main.6a596e9f.js.map"
+    "main.css": "/consulpet/login/static/css/main.cea6a545.css",
+    "main.js": "/consulpet/login/static/js/main.6bccddbd.js",
+    "static/media/dogTitulo.svg": "/consulpet/login/static/media/dogTitulo.f1780b72cd1cdf33d83854703bc30368.svg",
+    "index.html": "/consulpet/login/index.html",
+    "main.cea6a545.css.map": "/consulpet/login/static/css/main.cea6a545.css.map",
+    "main.6bccddbd.js.map": "/consulpet/login/static/js/main.6bccddbd.js.map"
   },
   "entrypoints": [
     "static/css/main.cea6a545.css",
-    "static/js/main.6a596e9f.js"
+    "static/js/main.6bccddbd.js"
   ]
 }
