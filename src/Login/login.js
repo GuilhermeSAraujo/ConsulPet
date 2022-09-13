@@ -115,7 +115,7 @@ function Login() {
 				<Typography component="h1" variant="h5">
 					Entrar
 				</Typography>
-				<Box component="form" onSubmit={handleSubmit} noValidate padding={4} sx={{ mt: 1, backgroundColor: '#9734ff', borderRadius: '3%' }}>
+				<Box component="form" onSubmit={handleSubmit} noValidate padding={4} sx={{ mt: 1, backgroundColor: '#9734ff', borderRadius: '3%', border: '1px solid white' }}>
 					<TextField
 						margin="normal"
 						required
@@ -175,7 +175,7 @@ function Login() {
 				</Box>
 			</Box>
 			<Copyright sx={{ mt: 8, mb: 4 }} />
-		</Container>
+		</Container >
 	);
 }
 export default Login;
