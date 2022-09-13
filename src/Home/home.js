@@ -59,7 +59,7 @@ function Home() {
 	};
 
 	const handlePet = (e) => {
-		setPet(e.target.value)
+		setPet(e.target.value);
 	};
 
 	return (
