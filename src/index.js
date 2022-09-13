@@ -8,19 +8,28 @@ import Cadastro from "./Cadastro/cadastro";
 import "./index.css";
 import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+
+const darkTheme = createTheme({
+	palette: {
+		mode: "dark",
+	},
+});
 dayjs.locale("pt-br");
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
 	<React.StrictMode>
 		<HashRouter>
-			<Routes>
-				<Route path={`*`} element={<Login />} />
-				<Route path={`/login`} element={<Login />} />
-				<Route path={`/cadastro`} element={<Cadastro />} />
-				<Route path={`/cadastrarAgendamento`} element={<Home />} />
-				<Route path={`/meusAgendamentos`} element={<Agenda />} />
-			</Routes>
+			<ThemeProvider theme={darkTheme}>
+				<Routes>
+					<Route path={`*`} element={<Login />} />
+					<Route path={`/login`} element={<Login />} />
+					<Route path={`/cadastro`} element={<Cadastro />} />
+					<Route path={`/cadastrarAgendamento`} element={<Home />} />
+					<Route path={`/meusAgendamentos`} element={<Agenda />} />
+				</Routes>
+			</ThemeProvider>
 		</HashRouter>
 	</React.StrictMode>
 );

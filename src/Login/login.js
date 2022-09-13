@@ -33,8 +33,6 @@ function Copyright(props) {
 	);
 }
 
-const theme = createTheme();
-
 function Login() {
 	const [loading, setLoading] = React.useState(false);
 	const [toastIsOpen, setToastIsOpen] = React.useState(false);
@@ -91,95 +89,93 @@ function Login() {
 		let autenticado = await Autentica(email, password);
 		setLoading(false);
 		if (autenticado) {
-			navigate("/cadastrarAgendamento");
+			navigate("/cadastrarAgendamento", { state: { autenticado: true } });
 		}
 	};
 
 	return (
-		<ThemeProvider theme={theme}>
-			<Container component="main" maxWidth="xs">
-				<CssBaseline />
-				<Box
-					sx={{
-						marginTop: 8,
-						display: "flex",
-						flexDirection: "column",
-						alignItems: "center",
-					}}
-				>
-					<Snackbar open={toastIsOpen} autoHideDuration={1000} onClose={handleClose}>
-						<Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
-							Login e/ou senha não estão correto(s)
-						</Alert>
-					</Snackbar>
-					<Avatar sx={{ m: 1, bgcolor: "primary.main" }}>
-						<LockOutlinedIcon />
-					</Avatar>
-					<Typography component="h1" variant="h5">
-						Sign in
-					</Typography>
-					<Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-						<TextField
-							margin="normal"
-							required
-							fullWidth
-							id="email"
-							label="Email"
-							name="email"
-							autoComplete="email"
-							autoFocus
-							error={erroEmail}
-							helperText={erroEmail ? "Favor preencher o campo." : ""}
-							InputProps={{
-								endAdornment: (
-									<InputAdornment position="start">
-										<PersonIcon />
-									</InputAdornment>
-								),
-							}}
-						/>
-						<TextField
-							margin="normal"
-							required
-							fullWidth
-							name="password"
-							label="Senha"
-							type="password"
-							id="password"
-							error={erroSenha}
-							helperText={erroSenha ? "Favor preencher o campo." : ""}
-							autoComplete="current-password"
-							InputProps={{
-								endAdornment: (
-									<InputAdornment position="start">
-										<LockIcon />
-									</InputAdornment>
-								),
-							}}
-						/>
-						<LoadingButton
-							type="submit"
-							loading={loading}
-							loadingPosition="end"
-							fullWidth
-							variant="contained"
-							sx={{ mt: 3, mb: 2 }}
-							endIcon={<LoginIcon />}
-						>
-							Entrar
-						</LoadingButton>
-						<Grid container>
-							<Grid item>
-								<Link onClick={() => navigate("/cadastro")} variant="body2">
-									{"Ainda não possui uma conta? Cadastre-se aqui."}
-								</Link>
-							</Grid>
+		<Container component="main" maxWidth="xs">
+			<CssBaseline />
+			<Box
+				sx={{
+					marginTop: 8,
+					display: "flex",
+					flexDirection: "column",
+					alignItems: "center",
+				}}
+			>
+				<Snackbar open={toastIsOpen} autoHideDuration={1000} onClose={handleClose}>
+					<Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
+						Login e/ou senha não estão correto(s)
+					</Alert>
+				</Snackbar>
+				<Avatar sx={{ m: 1, bgcolor: "primary.main" }}>
+					<LockOutlinedIcon />
+				</Avatar>
+				<Typography component="h1" variant="h5">
+					Entrar
+				</Typography>
+				<Box component="form" onSubmit={handleSubmit} noValidate padding={4} sx={{ mt: 1, backgroundColor: '#9734ff', borderRadius: '3%' }}>
+					<TextField
+						margin="normal"
+						required
+						fullWidth
+						id="email"
+						label="Email"
+						name="email"
+						autoComplete="email"
+						autoFocus
+						error={erroEmail}
+						helperText={erroEmail ? "Favor preencher o campo." : ""}
+						InputProps={{
+							endAdornment: (
+								<InputAdornment position="start">
+									<PersonIcon />
+								</InputAdornment>
+							),
+						}}
+					/>
+					<TextField
+						margin="normal"
+						required
+						fullWidth
+						name="password"
+						label="Senha"
+						type="password"
+						id="password"
+						error={erroSenha}
+						helperText={erroSenha ? "Favor preencher o campo." : ""}
+						autoComplete="current-password"
+						InputProps={{
+							endAdornment: (
+								<InputAdornment position="start">
+									<LockIcon />
+								</InputAdornment>
+							),
+						}}
+					/>
+					<LoadingButton
+						type="submit"
+						loading={loading}
+						loadingPosition="end"
+						fullWidth
+						variant="contained"
+						sx={{ mt: 3, mb: 2 }}
+						endIcon={<LoginIcon />}
+					>
+						Entrar
+					</LoadingButton>
+					<Grid container>
+						<Grid item>
+							<Link onClick={() => navigate("/cadastro")} variant="body2">
+								{"Ainda não possui uma conta? Cadastre-se aqui."}
+							</Link>
 						</Grid>
-					</Box>
+					</Grid>
 				</Box>
-				<Copyright sx={{ mt: 8, mb: 4 }} />
-			</Container>
-		</ThemeProvider>
+			</Box>
+			<Copyright sx={{ mt: 8, mb: 4 }} />
+		</Container>
 	);
 }
 export default Login;

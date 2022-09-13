@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import {
 	Grid,
 	Box,
@@ -16,7 +16,7 @@ import {
 	FormGroup,
 } from "@mui/material";
 import DogTitulo from "../assets/dogTitulo.svg";
-import PersonIcon from "@mui/icons-material/Person";
+import ConsulpetLogo from "../assets/consulpetLogo.svg";
 import PetsIcon from "@mui/icons-material/Pets";
 import RoomServiceIcon from "@mui/icons-material/RoomService";
 import { useState } from "react";
@@ -43,6 +43,10 @@ function Home() {
 	const [adestramento, setAdestramento] = useState(false);
 
 	const debouncedData = useDebounce(data, 5000);
+
+	const { state } = useLocation();
+	console.log(state.autenticado);
+
 	const onSubmit = (data) => console.log(data);
 
 	const handlePorte = (e) => {
@@ -66,43 +70,36 @@ function Home() {
 		<LocalizationProvider dateAdapter={AdapterDayjs}>
 			<Grid
 				container
+				margin={0}
 				padding={0}
 				sx={{
 					width: "100%",
-					paddingTop: "1%",
-					paddingBottom: "1%",
 					justifyContent: "center",
 				}}
 			>
 				<Grid
+					m={0}
 					item
 					xs={12}
 					sm={12}
 					md={12}
 					lg={12}
 					sx={{
-						backgroundColor: "#4eff27",
+						backgroundColor: "#cba1ff",
 						paddingTop: "10px",
 						paddingBottom: "10px",
 					}}
 				>
-					<Typography
-						fontWeight={600}
-						variant="h4"
+					<Box
+						src={ConsulpetLogo}
+						component="img"
 						sx={{
-							letterSpacing: "5px",
+							marginLeft: '1rem',
+							maxWidth: "75px",
+							verticalAlign: "bottom",
 						}}
-					>
-						<Box
-							src={DogTitulo}
-							component="img"
-							sx={{
-								maxWidth: "45px",
-								verticalAlign: "bottom",
-							}}
-						/>
-						ConsulPet
-					</Typography>
+					/>
+
 				</Grid>
 				<Grid
 					item
@@ -116,7 +113,7 @@ function Home() {
 				>
 					<Box
 						sx={{
-							backgroundColor: "#d3f2d3",
+							backgroundColor: "#9734ff",
 							paddingTop: "20px",
 							paddingBottom: "25px",
 							borderRadius: "10%",
@@ -127,8 +124,8 @@ function Home() {
 					>
 						<Typography
 							variant="h5"
-							fontWeight={400}
-							sx={{ marginBottom: "1.5rem", letterSpacing: "2px" }}
+							fontWeight={500}
+							sx={{ marginBottom: "1.5rem", letterSpacing: "2px", color: "white" }}
 						>
 							Agende seu horário
 						</Typography>
@@ -296,8 +293,7 @@ function Home() {
 									control={
 										<Checkbox
 											disabled={servico.valor !== 3}
-											val
-											ue={adestramento}
+											value={adestramento}
 											onClick={() => setAdestramento(!adestramento)}
 										/>
 									}
