@@ -58,8 +58,8 @@ function Home() {
 		}
 	};
 
-	const handlePet = () => {
-		setPet({ nome: "Quiana", idade: 2 });
+	const handlePet = (e) => {
+		setPet(e.target.value)
 	};
 
 	return (
@@ -142,9 +142,7 @@ function Home() {
 									onChange={handlePet}
 									sx={{ textAlign: "left" }}
 								>
-									<MenuItem value={encontraPorte(1)}>{encontraPorte(1).nome}</MenuItem>
-									<MenuItem value={encontraPorte(2)}>{encontraPorte(2).nome}</MenuItem>
-									<MenuItem value={encontraPorte(3)}>{encontraPorte(3).nome}</MenuItem>
+									<MenuItem value={"Capitu"}>Capitu</MenuItem>
 								</Select>
 							</FormControl>
 							<FormControl>
