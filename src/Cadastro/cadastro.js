@@ -117,8 +117,8 @@ export default function Cadastro() {
 						</Button>
 						<Grid container justifyContent="flex-end">
 							<Grid item>
-								<Link href="#" variant="body2">
-									Already have an account? Sign in
+								<Link href="/login" variant="body2">
+									Já possui uma conta? Entre aqui.
 								</Link>
 							</Grid>
 						</Grid>
