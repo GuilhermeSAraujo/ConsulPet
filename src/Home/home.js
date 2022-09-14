@@ -94,12 +94,11 @@ function Home() {
 						src={ConsulpetLogo}
 						component="img"
 						sx={{
-							marginLeft: '1rem',
+							marginLeft: "1rem",
 							maxWidth: "75px",
 							verticalAlign: "bottom",
 						}}
 					/>
-
 				</Grid>
 				<Grid
 					item
