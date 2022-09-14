@@ -14,6 +14,8 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+
 
 function Copyright(props) {
 	return (
@@ -32,6 +34,12 @@ export default function Cadastro() {
 	const [loading, setLoading] = React.useState(false);
 	const [modalOpen, setModalOpen] = React.useState(true);
 
+	const darkTheme = createTheme({
+		palette: {
+			mode: "light",
+		},
+	});
+
 	const handleSubmit = (event) => {
 		setLoading(true);
 		event.preventDefault();
@@ -45,21 +53,16 @@ export default function Cadastro() {
 	};
 
 	return (
-		<Container component="main" maxWidth="xs">
+		<Container component="main" maxWidth="xs" p={0} m={0}>
 			<CssBaseline />
-			<Box
-				sx={{
-					marginTop: 4,
-					display: "flex",
-					flexDirection: "column",
-					alignItems: "center",
-				}}
-			>
+			<ThemeProvider theme={darkTheme}>
 				<Modal
 					open={modalOpen}
+					// disableScrollLock
 					onClose={() => setModalOpen(false)}
 					aria-labelledby="modal-modal-title"
 					aria-describedby="modal-modal-description"
+					style={{ alignItems: 'center', justifyContent: 'center' }}
 				>
 					<Box sx={{
 						position: 'absolute',
@@ -68,10 +71,11 @@ export default function Cadastro() {
 						transform: 'translate(-50%, -50%)',
 						width: 400,
 						bgcolor: 'white',
-						border: '2px solid #000',
+						border: '1px solid black',
+						borderRadius: '3%',
 						boxShadow: 24,
 						p: 4,
-						color: 'black'
+						color: 'black',
 					}}>
 						<Typography style={{ display: 'inline' }} id="modal-modal-title" variant="h6" component="h2">
 							{"Dados do"}
@@ -95,6 +99,15 @@ export default function Cadastro() {
 						</Grid>
 					</Box>
 				</Modal>
+			</ThemeProvider>
+			<Box
+				sx={{
+					marginTop: 4,
+					display: "flex",
+					flexDirection: "column",
+					alignItems: "center",
+				}}
+			>
 				<Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
 					<LockOutlinedIcon />
 				</Avatar>
