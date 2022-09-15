@@ -2,3 +2,13 @@
 
 Projeto publicado em: [https://GuilhermeSAraujo.github.io/consulpet]
 
+### Melhorias a serem realizadas:
+
+ - Componentização dos seguintes componentes: 
+	 - Login
+		 - autenticação (service).
+	 - Cadastro
+		 - Cadastro Pet;
+		 - Requisição para back-end (service).
+	 - Home
+		 - Separação das partes do formulário, ex: checkbox de serviços.
