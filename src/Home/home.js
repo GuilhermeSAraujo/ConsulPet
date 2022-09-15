@@ -209,6 +209,7 @@ function Home() {
 								}}
 							>
 								<FormControlLabel
+									sx={{ display: servico.valor !== 2 ? "none" : "" }}
 									control={
 										<Checkbox
 											disabled={servico.valor !== 2}
@@ -219,6 +220,7 @@ function Home() {
 									label="Banho"
 								/>
 								<FormControlLabel
+									sx={{ display: servico.valor !== 2 ? "none" : "" }}
 									control={
 										<Checkbox
 											disabled={servico.valor !== 2}
@@ -229,6 +231,7 @@ function Home() {
 									label="Tosa"
 								/>
 								<FormControlLabel
+									sx={{ display: servico.valor !== 2 ? "none" : "" }}
 									control={
 										<Checkbox
 											disabled={servico.valor !== 2}
@@ -239,6 +242,7 @@ function Home() {
 									label="Desembaraçamento"
 								/>
 								<FormControlLabel
+									sx={{ display: servico.valor !== 2 ? "none" : "" }}
 									control={
 										<Checkbox
 											disabled={servico.valor !== 2}
@@ -249,6 +253,7 @@ function Home() {
 									label="Corte de unhas"
 								/>
 								<FormControlLabel
+									sx={{ display: servico.valor !== 2 ? "none" : "" }}
 									control={
 										<Checkbox
 											disabled={servico.valor !== 2}
@@ -259,6 +264,7 @@ function Home() {
 									label="Hidratação"
 								/>
 								<FormControlLabel
+									sx={{ display: servico.valor !== 1 ? "none" : "" }}
 									control={
 										<Checkbox
 											disabled={servico.valor !== 1}
@@ -269,6 +275,7 @@ function Home() {
 									label="Consulta"
 								/>
 								<FormControlLabel
+									sx={{ display: servico.valor !== 1 ? "none" : "" }}
 									control={
 										<Checkbox
 											disabled={servico.valor !== 1}
@@ -279,6 +286,7 @@ function Home() {
 									label="Vacinação"
 								/>
 								<FormControlLabel
+									sx={{ display: servico.valor !== 3 ? "none" : "" }}
 									control={
 										<Checkbox
 											disabled={servico.valor !== 3}
@@ -289,6 +297,7 @@ function Home() {
 									label="Passeio"
 								/>
 								<FormControlLabel
+									sx={{ display: servico.valor !== 3 ? "none" : "" }}
 									control={
 										<Checkbox
 											disabled={servico.valor !== 3}
