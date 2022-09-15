@@ -16,22 +16,9 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import LoginIcon from "@mui/icons-material/Login";
 import PersonIcon from "@mui/icons-material/Person";
 import LockIcon from "@mui/icons-material/Lock";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useTheme } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import { fabClasses } from "@mui/material";
-
-function Copyright(props) {
-	return (
-		<Typography variant="body2" color="text.secondary" align="center" {...props}>
-			{"Copyright © "}
-			<Link color="inherit" href="https://github.com/GuilhermeSAraujo/consulpet">
-				ConsulPet
-			</Link>{" "}
-			{new Date().getFullYear()}
-			{"."}
-		</Typography>
-	);
-}
 
 function Login() {
 	const [loading, setLoading] = React.useState(false);
@@ -39,7 +26,26 @@ function Login() {
 	const [erroEmail, setErroEmail] = React.useState(false);
 	const [erroSenha, setErroSenha] = React.useState(false);
 
+	let theme = useTheme();
 	let navigate = useNavigate();
+
+	function Copyright(props) {
+		return (
+			<Typography
+				variant="body2"
+				color={theme.palette.text.secondary}
+				align="center"
+				{...props}
+			>
+				{"Copyright © "}
+				<Link color="inherit" href="https://github.com/GuilhermeSAraujo/consulpet">
+					ConsulPet
+				</Link>{" "}
+				{new Date().getFullYear()}
+				{"."}
+			</Typography>
+		);
+	}
 
 	const handleClose = (event, reason) => {
 		if (reason === "clickaway") {
@@ -94,7 +100,7 @@ function Login() {
 	};
 
 	return (
-		<Container component="main" maxWidth="xs">
+		<Container component="main" maxWidth="xs" bc={theme.palette.primary.main}>
 			<CssBaseline />
 			<Box
 				sx={{
@@ -109,7 +115,7 @@ function Login() {
 						Login e/ou senha não estão correto(s)
 					</Alert>
 				</Snackbar>
-				<Avatar sx={{ m: 1, bgcolor: "primary.main" }}>
+				<Avatar sx={{ m: 1, bgcolor: theme.palette.secondary.main }}>
 					<LockOutlinedIcon />
 				</Avatar>
 				<Typography component="h1" variant="h5">
@@ -122,7 +128,7 @@ function Login() {
 					padding={4}
 					sx={{
 						mt: 1,
-						backgroundColor: "#9734ff",
+						backgroundColor: theme.palette.primary.light,
 						borderRadius: "3%",
 						border: "1px solid white",
 					}}
@@ -171,7 +177,7 @@ function Login() {
 						loadingPosition="end"
 						fullWidth
 						variant="contained"
-						sx={{ mt: 3, mb: 2 }}
+						sx={{ mt: 3, mb: 2, color: theme.palette.primary.dark }}
 						endIcon={<LoginIcon />}
 					>
 						Entrar

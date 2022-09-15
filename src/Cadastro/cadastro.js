@@ -18,20 +18,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import Card from "@mui/material/Card";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
-
-function Copyright(props) {
-	return (
-		<Typography variant="body2" color="text.secondary" align="center" {...props}>
-			{"Copyright © "}
-			<Link color="inherit" href="https://mui.com/">
-				ConsulPet
-			</Link>{" "}
-			{new Date().getFullYear()}
-			{"."}
-		</Typography>
-	);
-}
+import { ThemeProvider, createTheme, useTheme } from "@mui/material/styles";
 
 export default function Cadastro() {
 	const [loading, setLoading] = React.useState(false);
@@ -50,11 +37,26 @@ export default function Cadastro() {
 	const [erroEmail, setErroEmail] = React.useState("");
 	const [erroSenha, setErroSenha] = React.useState("");
 
+	const theme = useTheme();
+
 	const darkTheme = createTheme({
 		palette: {
 			mode: "light",
 		},
 	});
+
+	function Copyright(props) {
+		return (
+			<Typography variant="body2" color="text.secondary" align="center" {...props}>
+				{"Copyright © "}
+				<Link color="inherit" href="https://mui.com/">
+					ConsulPet
+				</Link>{" "}
+				{new Date().getFullYear()}
+				{"."}
+			</Typography>
+		);
+	}
 
 	const handleSubmit = (event) => {
 		setLoading(true);
@@ -168,7 +170,7 @@ export default function Cadastro() {
 							left: "50%",
 							maxWidth: "400px",
 							transform: "translate(-50%, -50%)",
-							bgcolor: "white",
+							bgcolor: theme.palette.primary.main,
 							border: "2px solid black",
 							borderRadius: "3%",
 							boxShadow: 24,
@@ -244,7 +246,7 @@ export default function Cadastro() {
 									sx={{
 										mt: 3,
 										mb: 2,
-										backgroundColor: "#5119d2",
+										backgroundColor: theme.palette.primary.dark,
 										border: "1px solid black",
 									}}
 									endIcon={<AddCircleIcon />}
@@ -266,7 +268,7 @@ export default function Cadastro() {
 						alignItems: "center",
 					}}
 				>
-					<Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+					<Avatar sx={{ m: 1, bgcolor: theme.palette.secondary.main }}>
 						<LockOutlinedIcon />
 					</Avatar>
 					<Typography component="h1" variant="h5">
@@ -279,7 +281,7 @@ export default function Cadastro() {
 						padding={4}
 						sx={{
 							mt: 3,
-							backgroundColor: "#9734ff",
+							backgroundColor: theme.palette.primary.light,
 							borderRadius: "3%",
 							border: "1px solid white",
 						}}
@@ -342,7 +344,7 @@ export default function Cadastro() {
 							<Grid item xs={12} textAlign="center">
 								<Button
 									variant="contained"
-									sx={{ mt: 2, mb: 2, backgroundColor: "#f0c7fc" }}
+									sx={{ mt: 2, mb: 2, backgroundColor: theme.palette.primary.dark }}
 									endIcon={<AddCircleIcon />}
 									onClick={() => setModalOpen(true)}
 								>
@@ -357,7 +359,10 @@ export default function Cadastro() {
 												<Grid
 													container
 													p={1}
-													sx={{ backgroundColor: "#f0c7fc", color: "black" }}
+													sx={{
+														backgroundColor: theme.palette.primary.main,
+														color: "black",
+													}}
 												>
 													<Grid item xs={3} md={3} lg={3} textAlign="center">
 														<Typography
@@ -407,7 +412,7 @@ export default function Cadastro() {
 							)}
 							<Grid item xs={12} textAlign="center" mt={2}>
 								<FormControlLabel
-								sx={{color: erroTermosAceitos ? 'red' : ''}}
+									sx={{ color: erroTermosAceitos ? "red" : "" }}
 									control={
 										<Checkbox
 											value={termosAceitos}
@@ -424,7 +429,7 @@ export default function Cadastro() {
 							loadingPosition="end"
 							fullWidth
 							variant="contained"
-							sx={{ mt: 3, mb: 2, backgroundColor: "#f0c7fc" }}
+							sx={{ mt: 3, mb: 2, backgroundColor: theme.palette.primary.dark }}
 							endIcon={<PersonAddIcon sx={{ ml: 0.5 }} />}
 						>
 							Cadastrar

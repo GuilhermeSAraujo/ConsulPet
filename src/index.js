@@ -15,13 +15,32 @@ const darkTheme = createTheme({
 		mode: "dark",
 	},
 });
+
+const theme = createTheme({
+	palette: {
+		mode: "dark",
+		primary: {
+			light: "#362873",
+			main: "#fff",
+			dark: "#000022",
+			contrastText: "#fff",
+		},
+		secondary: {
+			light: "#ffffff",
+			main: "#fffff8",
+			dark: "#ccccc5",
+			contrastText: "#000",
+		},
+	},
+});
+
 dayjs.locale("pt-br");
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
 	<React.StrictMode>
 		<HashRouter>
-			<ThemeProvider theme={darkTheme}>
+			<ThemeProvider theme={theme}>
 				<Routes>
 					<Route path={`*`} element={<Login />} />
 					<Route path={`/login`} element={<Login />} />

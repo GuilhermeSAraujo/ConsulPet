@@ -14,6 +14,7 @@ import {
 	FormControlLabel,
 	Checkbox,
 	FormGroup,
+	CssBaseline,
 } from "@mui/material";
 import DogTitulo from "../assets/dogTitulo.svg";
 import ConsulpetLogo from "../assets/consulpetLogo.svg";
@@ -26,6 +27,7 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { useDebounce } from "../utils/useDebounce";
 import { encontraPorte, encontraServico } from "../utils/enum/selectEnum";
 import dayjs from "dayjs";
+import { useTheme } from "@mui/material/styles";
 
 function Home() {
 	const [porte, setPorte] = useState("");
@@ -44,6 +46,7 @@ function Home() {
 
 	const debouncedData = useDebounce(data, 5000);
 
+	const theme = useTheme();
 	const { state } = useLocation();
 	console.log(state.autenticado);
 
@@ -77,6 +80,7 @@ function Home() {
 					justifyContent: "center",
 				}}
 			>
+				<CssBaseline />
 				<Grid
 					m={0}
 					item
@@ -85,7 +89,7 @@ function Home() {
 					md={12}
 					lg={12}
 					sx={{
-						backgroundColor: "#cba1ff",
+						backgroundColor: theme.palette.primary.main,
 						paddingTop: "10px",
 						paddingBottom: "10px",
 					}}
@@ -112,13 +116,13 @@ function Home() {
 				>
 					<Box
 						sx={{
-							backgroundColor: "#9734ff",
+							backgroundColor: theme.palette.primary.light,
 							paddingTop: "20px",
 							paddingBottom: "25px",
 							borderRadius: "10%",
 							paddingRight: "15%",
 							paddingLeft: "15%",
-							boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
+							boxShadow: "0px 6px 23px 9px rgba(59,44,202,0.3)",
 						}}
 					>
 						<Typography
