@@ -22,8 +22,8 @@ import { validaEmail } from "../utils/stringUtils";
 function Login() {
 	const [loading, setLoading] = React.useState(false);
 	const [toastIsOpen, setToastIsOpen] = React.useState(false);
-	const [inputLogin, setInputLogin] = React.useState('');
-	const [inputSenha, setInputSenha] = React.useState('');
+	const [inputLogin, setInputLogin] = React.useState("");
+	const [inputSenha, setInputSenha] = React.useState("");
 	const [erroEmail, setErroEmail] = React.useState(false);
 	const [erroSenha, setErroSenha] = React.useState(false);
 
@@ -46,7 +46,7 @@ function Login() {
 				{"."}
 			</Typography>
 		);
-	}
+	};
 
 	const handleClose = (event, reason) => {
 		if (reason === "clickaway") {
@@ -57,18 +57,18 @@ function Login() {
 	};
 
 	const validaEntradasCredenciais = (email, senha) => {
-		validaEmail(email) ? setErroEmail(false) : setErroEmail(true)
+		validaEmail(email) ? setErroEmail(false) : setErroEmail(true);
 		senha.length > 0 ? setErroSenha(false) : setErroSenha(true);
-	}
+	};
 
 	const handleSubmit = async (event) => {
 		setLoading(true);
 		event.preventDefault();
 		const data = new FormData(event.currentTarget);
-		console.log({
-			email: data.get("email"),
-			password: data.get("password"),
-		});
+		// console.log({
+		// 	email: data.get("email"),
+		// 	password: data.get("password"),
+		// });
 		const email = data.get("email");
 		const password = data.get("password");
 		validaEntradasCredenciais(email, password);

@@ -19,6 +19,8 @@ import Container from "@mui/material/Container";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import Card from "@mui/material/Card";
 import { ThemeProvider, createTheme, useTheme } from "@mui/material/styles";
+import { validaEmail, validaNome, validaSenha } from "../utils/stringUtils";
+import cadastroService from "./service/cadastroService";
 
 export default function Cadastro() {
 	const [loading, setLoading] = React.useState(false);
@@ -62,40 +64,51 @@ export default function Cadastro() {
 		setLoading(true);
 		event.preventDefault();
 		const data = new FormData(event.currentTarget);
-		console.log({
-			email: data.get("email"),
-			firstName: data.get("firstName"),
-			lastName: data.get("lastName"),
-			password: data.get("password"),
-			pets: pets,
-		});
+		// console.log({
+		// 	email: data.get("email"),
+		// 	firstName: data.get("firstName"),
+		// 	lastName: data.get("lastName"),
+		// 	password: data.get("password"),
+		// 	pets: pets,
+		// });
 		const email = data.get("email");
 		const firstName = data.get("firstName");
 		const lastName = data.get("lastName");
 		const password = data.get("password");
-		if (password.length > 0 && password.length <= 4) {
-			setErroSenha("A senha deve conter no mínimo 5 caracteres.");
-		} else if (password.length === 0) {
-			setErroSenha("Preencha com a sua senha.");
+
+		let entradasSaoValidas = validaEntradasCadastro(
+			firstName,
+			lastName,
+			email,
+			password
+		);
+
+		if (entradasSaoValidas) {
+			cadastroService.cadastraCliente({ firstName, lastName, email, password });
+		}
+		setLoading(false);
+	};
+
+	const validaEntradasCadastro = (firstName, lastName, email, password) => {
+		if (!validaSenha(password)) {
+			setErroSenha(true);
 		} else {
-			setErroSenha("");
+			setErroSenha(false);
 		}
 
-		if (email.length === 0) {
-			setErroEmail("Preencha com seu email.");
-		} else if (!email.includes("@") || !email.includes(".")) {
-			setErroEmail("Preencha com um endereço de email válido.");
+		if (!validaEmail(email)) {
+			setErroEmail(true);
 		} else {
-			setErroEmail("");
+			setErroEmail(false);
 		}
 
-		if (firstName.length === 0) {
+		if (!validaNome(firstName)) {
 			setErroPrimeiroNome(true);
 		} else {
 			setErroPrimeiroNome(false);
 		}
 
-		if (lastName.length === 0) {
+		if (!validaNome(lastName)) {
 			setErroSobrenome(true);
 		} else {
 			setErroSobrenome(false);
@@ -107,7 +120,16 @@ export default function Cadastro() {
 			setErroTermosAceitos(false);
 		}
 
-		setLoading(false);
+		if (
+			termosAceitos &&
+			validaNome(firstName) &&
+			validaNome(lastName) &&
+			validaEmail(email) &&
+			validaSenha(password)
+		) {
+			return true;
+		}
+		return false;
 	};
 
 	const handleAddPet = (event) => {
@@ -119,31 +141,39 @@ export default function Cadastro() {
 			pesoPet: data.get("pesoPet"),
 		};
 
-		if (novoPet.nomePet.length === 0) {
+		let entradasSaoValidas = validaEntradasPet(novoPet);
+
+		if (entradasSaoValidas) {
+			setModalOpen(false);
+			setPets((petsAntigos) => [...petsAntigos, novoPet]);
+		}
+	};
+
+	const validaEntradasPet = (pet) => {
+		if (!validaNome(pet.nomePet.length)) {
 			setErroNomePet(true);
 		} else {
 			setErroNomePet(false);
 		}
 
-		if (novoPet.idadePet.length === 0) {
+		if (pet.idadePet.length === 0) {
 			setErroIdadePet(true);
 		} else {
 			setErroIdadePet(false);
 		}
 
-		if (novoPet.pesoPet.length === 0) {
+		if (pet.pesoPet.length <= 0) {
 			setErroPesoPet(true);
 		} else {
 			setErroPesoPet(false);
 		}
 
 		if (
-			novoPet.nomePet.length > 0 &&
-			novoPet.idadePet.length > 0 &&
-			novoPet.pesoPet.length > 0
+			pet.nomePet.length > 0 &&
+			pet.idadePet.length > 0 &&
+			pet.pesoPet.length > 0
 		) {
-			setModalOpen(false);
-			setPets((petsAntigos) => [...petsAntigos, novoPet]);
+			return true;
 		}
 	};
 
@@ -324,8 +354,10 @@ export default function Cadastro() {
 									label="Endereço de email"
 									name="email"
 									autoComplete="email"
-									error={erroEmail.length > 0}
-									helperText={erroEmail.length > 0 ? erroEmail : ""}
+									error={erroEmail}
+									helperText={
+										erroEmail ? "Preencha com um endereço de email válido." : ""
+									}
 								/>
 							</Grid>
 							<Grid item xs={12}>
@@ -337,8 +369,29 @@ export default function Cadastro() {
 									type="password"
 									id="password"
 									autoComplete="new-password"
-									error={erroSenha.length > 0}
-									helperText={erroSenha.length > 0 ? erroSenha : ""}
+									error={erroSenha}
+									// margin={0}
+									// helperText={erroSenha.length > 0 ? erroSenha : ""}
+									helperText={
+										<Box>
+											<Typography
+												color={erroSenha ? "red" : "inherit"}
+												display="block"
+												variant="caption"
+												textAling="left"
+											>
+												Deve conter entre 6 e 20 caracteres;
+											</Typography>
+											<Typography
+												color={erroSenha ? "red" : "inherit"}
+												display="block"
+												variant="caption"
+												textAling="left"
+											>
+												Deve conter caracteres maísculos e minúsculos.
+											</Typography>
+										</Box>
+									}
 								/>
 							</Grid>
 							<Grid item xs={12} textAlign="center">
