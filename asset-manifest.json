@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/consulpet/static/css/main.fc378449.css",
-    "main.js": "/consulpet/static/js/main.fba6f036.js",
+    "main.js": "/consulpet/static/js/main.f1320a36.js",
     "static/media/consulpetLogo.svg": "/consulpet/static/media/consulpetLogo.e923e0e2e73d837ce7e1198029a53cd1.svg",
     "static/media/dogTitulo.svg": "/consulpet/static/media/dogTitulo.f1780b72cd1cdf33d83854703bc30368.svg",
     "index.html": "/consulpet/index.html",
     "main.fc378449.css.map": "/consulpet/static/css/main.fc378449.css.map",
-    "main.fba6f036.js.map": "/consulpet/static/js/main.fba6f036.js.map"
+    "main.f1320a36.js.map": "/consulpet/static/js/main.f1320a36.js.map"
   },
   "entrypoints": [
     "static/css/main.fc378449.css",
-    "static/js/main.fba6f036.js"
+    "static/js/main.f1320a36.js"
   ]
 }
