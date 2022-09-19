@@ -1,7 +1,6 @@
 import * as React from "react";
 import InputAdornment from "@mui/material/InputAdornment";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
@@ -18,18 +17,20 @@ import PersonIcon from "@mui/icons-material/Person";
 import LockIcon from "@mui/icons-material/Lock";
 import { useTheme } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
-import { fabClasses } from "@mui/material";
+import { validaEmail } from "../utils/stringUtils";
 
 function Login() {
 	const [loading, setLoading] = React.useState(false);
 	const [toastIsOpen, setToastIsOpen] = React.useState(false);
+	const [inputLogin, setInputLogin] = React.useState('');
+	const [inputSenha, setInputSenha] = React.useState('');
 	const [erroEmail, setErroEmail] = React.useState(false);
 	const [erroSenha, setErroSenha] = React.useState(false);
 
 	let theme = useTheme();
 	let navigate = useNavigate();
 
-	function Copyright(props) {
+	const Copyright = (props) => {
 		return (
 			<Typography
 				variant="body2"
@@ -55,31 +56,9 @@ function Login() {
 		setToastIsOpen(false);
 	};
 
-	async function Autentica(email, senha) {
-		if (email.length === 0) {
-			setErroEmail(true);
-		}
-
-		if (senha.length === 0) {
-			setErroSenha(true);
-		}
-
-		if (email.length === 0 || senha.length === 0) {
-			return false;
-		}
-
-		if (email === "123") {
-			await new Promise(function (resolve) {
-				setTimeout(resolve, 1000);
-			});
-			setToastIsOpen(true);
-			return false;
-		} else {
-			await new Promise(function (resolve) {
-				setTimeout(resolve, 1000);
-			});
-			return true;
-		}
+	const validaEntradasCredenciais = (email, senha) => {
+		validaEmail(email) ? setErroEmail(false) : setErroEmail(true)
+		senha.length > 0 ? setErroSenha(false) : setErroSenha(true);
 	}
 
 	const handleSubmit = async (event) => {
@@ -92,11 +71,8 @@ function Login() {
 		});
 		const email = data.get("email");
 		const password = data.get("password");
-		let autenticado = await Autentica(email, password);
-		setLoading(false);
-		if (autenticado) {
-			navigate("/cadastrarAgendamento", { state: { autenticado: true } });
-		}
+		validaEntradasCredenciais(email, password);
+		navigate("/cadastrarAgendamento", { state: { autenticado: true } });
 	};
 
 	return (
@@ -134,6 +110,8 @@ function Login() {
 					}}
 				>
 					<TextField
+						value={inputLogin}
+						onChange={(e) => setInputLogin(e.target.value)}
 						margin="normal"
 						required
 						fullWidth
@@ -143,7 +121,7 @@ function Login() {
 						autoComplete="email"
 						autoFocus
 						error={erroEmail}
-						helperText={erroEmail ? "Favor preencher o campo." : ""}
+						helperText={erroEmail ? "Favor preencher com um email válido." : ""}
 						InputProps={{
 							endAdornment: (
 								<InputAdornment position="start">
@@ -153,6 +131,8 @@ function Login() {
 						}}
 					/>
 					<TextField
+						value={inputSenha}
+						onChange={(e) => setInputSenha(e.target.value)}
 						margin="normal"
 						required
 						fullWidth
@@ -161,7 +141,7 @@ function Login() {
 						type="password"
 						id="password"
 						error={erroSenha}
-						helperText={erroSenha ? "Favor preencher o campo." : ""}
+						helperText={erroSenha ? "Favor preencher o campo corretamente." : ""}
 						autoComplete="current-password"
 						InputProps={{
 							endAdornment: (
@@ -175,6 +155,7 @@ function Login() {
 						type="submit"
 						loading={loading}
 						loadingPosition="end"
+						disabled={inputLogin.length === 0 || inputSenha.length === 0}
 						fullWidth
 						variant="contained"
 						sx={{ mt: 3, mb: 2, color: theme.palette.primary.dark }}
