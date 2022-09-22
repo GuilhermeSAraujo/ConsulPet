@@ -9,6 +9,7 @@ import "./index.css";
 import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import makeServer from "./server";
 
 const darkTheme = createTheme({
 	palette: {
@@ -35,7 +36,7 @@ const theme = createTheme({
 });
 
 dayjs.locale("pt-br");
-
+makeServer();
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
 	<React.StrictMode>

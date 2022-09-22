@@ -2,7 +2,7 @@ import CadastroRepository from "../../repositories/cadastroRepository";
 
 class CadastroService {
 	async cadastraCliente(dadosCliente) {
-		await CadastroRepository.cadastraCliente(dadosCliente);
+		return await CadastroRepository.cadastraCliente(dadosCliente);
 	}
 }
 
