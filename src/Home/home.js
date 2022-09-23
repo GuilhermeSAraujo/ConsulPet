@@ -16,7 +16,6 @@ import {
 	FormGroup,
 	CssBaseline,
 } from "@mui/material";
-import DogTitulo from "../assets/dogTitulo.svg";
 import ConsulpetLogo from "../assets/consulpetLogo.svg";
 import PetsIcon from "@mui/icons-material/Pets";
 import RoomServiceIcon from "@mui/icons-material/RoomService";
@@ -28,6 +27,7 @@ import { useDebounce } from "../utils/useDebounce";
 import { encontraPorte, encontraServico } from "../utils/enum/selectEnum";
 import dayjs from "dayjs";
 import { useTheme } from "@mui/material/styles";
+import Navbar from "../shared/components/navbar";
 
 function Home() {
 	const [porte, setPorte] = useState("");
@@ -81,29 +81,6 @@ function Home() {
 				}}
 			>
 				<CssBaseline />
-				<Grid
-					m={0}
-					item
-					xs={12}
-					sm={12}
-					md={12}
-					lg={12}
-					sx={{
-						backgroundColor: theme.palette.primary.main,
-						paddingTop: "10px",
-						paddingBottom: "10px",
-					}}
-				>
-					<Box
-						src={ConsulpetLogo}
-						component="img"
-						sx={{
-							marginLeft: "1rem",
-							maxWidth: "75px",
-							verticalAlign: "bottom",
-						}}
-					/>
-				</Grid>
 				<Grid
 					item
 					sm={12}

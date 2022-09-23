@@ -10,6 +10,7 @@ import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import makeServer from "./server";
+import Navbar from "./shared/components/navbar";
 
 const darkTheme = createTheme({
 	palette: {
@@ -42,6 +43,7 @@ root.render(
 	<React.StrictMode>
 		<HashRouter>
 			<ThemeProvider theme={theme}>
+				<Navbar />
 				<Routes>
 					<Route path={`*`} element={<Login />} />
 					<Route path={`/login`} element={<Login />} />
