@@ -1,11 +1,11 @@
-import { createServer } from "miragejs";
+import { createServer } from 'miragejs';
 
 export default function makeServer() {
-	createServer({
-		routes() {
-			this.post("/api/signup", () => ({
-				cadastro: true,
-			}));
-		},
-	});
+  createServer({
+    routes() {
+      this.post('/api/signup', () => ({
+        cadastro: true
+      }));
+    }
+  });
 }
