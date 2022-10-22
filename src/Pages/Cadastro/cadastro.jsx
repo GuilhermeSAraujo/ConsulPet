@@ -12,7 +12,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { useTheme } from '@mui/material/styles';
 import { useForm, Controller } from 'react-hook-form';
-import cadastroService from './service/cadastroService';
+import CadastroService from './service/cadastroService';
 import AlertaErroForm from '../../shared/components/erroForm';
 import Copyright from '../../shared/components/copyright';
 import { cpfMask } from '../../utils/cpfMask';
@@ -40,8 +40,9 @@ export default function Cadastro() {
 
   const onSubmit = (data) => {
     console.log(data);
-    cadastroService.cadastraCliente(data); // processo de cadastro
+    CadastroService.cadastraCliente(data); // processo de cadastro
   };
+  const autoCompleteStyle = { WebkitBoxShadow: `0 0 0 1000px ${theme.palette.primary.light} inset` };
 
   return (
     <Container component="main" maxWidth="xs" p={0} m={0}>
@@ -66,7 +67,7 @@ export default function Cadastro() {
             mt: 3,
             backgroundColor: theme.palette.primary.light,
             borderRadius: '3%',
-            border: '1px solid white'
+            border: '1px solid yellow'
           }}
         >
           <form id="cadastro">
@@ -85,6 +86,7 @@ export default function Cadastro() {
                       autoComplete="given-name"
                       autoFocus
                       required
+                      inputProps={{ style: autoCompleteStyle }}
                     />
                   )}
                 />
@@ -105,6 +107,7 @@ export default function Cadastro() {
                       value={value}
                       label="Sobrenome"
                       fullWidth
+                      inputProps={{ style: autoCompleteStyle }}
                     />
                   )}
                 />
@@ -123,6 +126,7 @@ export default function Cadastro() {
                       fullWidth
                       required
                       autoComplete="email"
+                      inputProps={{ style: autoCompleteStyle }}
                     />
                   )}
                 />
@@ -140,7 +144,7 @@ export default function Cadastro() {
                       label="CPF"
                       fullWidth
                       required
-                      autoComplete=""
+                      inputProps={{ style: autoCompleteStyle }}
                     />
                   )}
                 />
@@ -150,7 +154,7 @@ export default function Cadastro() {
                 <Controller
                   name="senha"
                   control={control}
-                  rules={{ required: true, maxLength: 6, minLength: 20 }}
+                  rules={{ required: true, minLength: 6, maxLength: 20 }}
                   render={({ field: { onChange, value } }) => (
                     <TextField
                       onChange={onChange}
@@ -160,21 +164,11 @@ export default function Cadastro() {
                       required
                       type="password"
                       fullWidth
-                      helperText={(
-                        <Box>
-                          <Typography
-                            color={errors.senha ? 'red' : 'inherit'}
-                            display="block"
-                            variant="caption"
-                            textAling="left"
-                          >
-                            Deve conter entre 6 e 20 caracteres
-                          </Typography>
-                        </Box>
-                      )}
+                      inputProps={{ style: autoCompleteStyle }}
                     />
                   )}
                 />
+                {errors.senha && <AlertaErroForm textoErro="Deve conter entre 6 e 20 caracteres" />}
               </Grid>
             </Grid>
           </form>
