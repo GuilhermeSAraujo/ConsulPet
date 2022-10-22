@@ -38,9 +38,11 @@ export default function Cadastro() {
     mode: 'onChange'
   });
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     console.log(data);
-    CadastroService.cadastraCliente(data); // processo de cadastro
+    setLoading(true);
+    await CadastroService.cadastraCliente(data); // processo de cadastro
+    setLoading(false);
   };
   const autoCompleteStyle = { WebkitBoxShadow: `0 0 0 1000px ${theme.palette.primary.light} inset` };
 

@@ -12,12 +12,6 @@ import 'dayjs/locale/pt-br';
 import makeServer from './server';
 import Navbar from './shared/components/navbar';
 
-const darkTheme = createTheme({
-  palette: {
-    mode: 'dark'
-  }
-});
-
 const theme = createTheme({
   palette: {
     mode: 'dark',

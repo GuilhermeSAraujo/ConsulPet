@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
   Grid,
@@ -18,16 +19,12 @@ import {
 } from '@mui/material';
 import PetsIcon from '@mui/icons-material/Pets';
 import RoomServiceIcon from '@mui/icons-material/RoomService';
-import { useState } from 'react';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import dayjs from 'dayjs';
 import { useTheme } from '@mui/material/styles';
-import { useDebounce } from '../../utils/useDebounce';
 import { encontraPorte, encontraServico } from '../../utils/enum/selectEnum';
-import ConsulpetLogo from '../../assets/consulpetLogo.svg';
-import Navbar from '../../shared/components/navbar';
 
 function Home() {
   const [porte, setPorte] = useState('');
@@ -44,13 +41,11 @@ function Home() {
   const [passeio, setPasseio] = useState(false);
   const [adestramento, setAdestramento] = useState(false);
 
-  const debouncedData = useDebounce(data, 5000);
-
   const theme = useTheme();
   const { state } = useLocation();
   console.log(state.autenticado);
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (dados) => console.log(dados);
 
   const handlePorte = (e) => {
     setPorte(e.target.value);
@@ -76,8 +71,8 @@ function Home() {
         margin={0}
         padding={0}
         sx={{
-				  width: '100%',
-				  justifyContent: 'center'
+          width: '100%',
+          justifyContent: 'center'
         }}
       >
         <CssBaseline />
@@ -87,19 +82,19 @@ function Home() {
           md={7}
           lg={7}
           sx={{
-					  marginTop: '8vh',
-					  textAlign: 'center'
+            marginTop: '8vh',
+            textAlign: 'center'
           }}
         >
           <Box
             sx={{
-						  backgroundColor: theme.palette.primary.light,
-						  paddingTop: '20px',
-						  paddingBottom: '25px',
-						  borderRadius: '10%',
-						  paddingRight: '15%',
-						  paddingLeft: '15%',
-						  boxShadow: '0px 6px 23px 9px rgba(59,44,202,0.3)'
+              backgroundColor: theme.palette.primary.light,
+              paddingTop: '20px',
+              paddingBottom: '25px',
+              borderRadius: '10%',
+              paddingRight: '15%',
+              paddingLeft: '15%',
+              boxShadow: '0px 6px 23px 9px rgba(59,44,202,0.3)'
             }}
           >
             <Typography
@@ -142,7 +137,7 @@ function Home() {
                     <InputAdornment
                       position="end"
                       sx={{
-											  marginRight: '1rem'
+                        marginRight: '1rem'
                       }}
                     >
                       <PetsIcon />
@@ -166,7 +161,7 @@ function Home() {
                     <InputAdornment
                       position="end"
                       sx={{
-											  marginRight: '1rem'
+                        marginRight: '1rem'
                       }}
                     >
                       <RoomServiceIcon />
@@ -186,7 +181,7 @@ function Home() {
               </FormControl>
               <FormGroup
                 sx={{
-								  display: 'table-row-group'
+                  display: 'table-row-group'
                 }}
               >
                 <FormControlLabel
@@ -293,10 +288,10 @@ function Home() {
                 color="primary"
                 onClick={onSubmit}
                 sx={{
-								  marginTop: '15px',
-								  borderRadius: '10%',
-								  color: 'darkblue',
-								  backgroundColor: '#c4e3cd'
+                  marginTop: '15px',
+                  borderRadius: '10%',
+                  color: 'darkblue',
+                  backgroundColor: '#c4e3cd'
                 }}
               >
                 Enviar

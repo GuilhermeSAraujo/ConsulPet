@@ -18,6 +18,7 @@ import LockIcon from '@mui/icons-material/Lock';
 import { useTheme } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import { validaEmail } from '../../utils/stringUtils';
+import Copyright from '../../shared/components/copyright';
 
 function Login() {
   const [loading, setLoading] = React.useState(false);
@@ -30,25 +31,6 @@ function Login() {
   const theme = useTheme();
   const navigate = useNavigate();
 
-  function Copyright(props) {
-    return (
-      <Typography
-        variant="body2"
-        color={theme.palette.text.secondary}
-        align="center"
-        {...props}
-      >
-        {'Copyright © '}
-        <Link color="inherit" href="https://github.com/GuilhermeSAraujo/consulpet">
-          ConsulPet
-        </Link>
-        {' '}
-        {new Date().getFullYear()}
-        .
-      </Typography>
-    );
-  }
-
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
@@ -58,8 +40,17 @@ function Login() {
   };
 
   const validaEntradasCredenciais = (email, senha) => {
-    validaEmail(email) ? setErroEmail(false) : setErroEmail(true);
-    senha.length > 0 ? setErroSenha(false) : setErroSenha(true);
+    if (validaEmail(email)) {
+      setErroEmail(false);
+    } else {
+      setErroEmail(true);
+    }
+
+    if (senha.length > 0) {
+      setErroSenha(false);
+    } else {
+      setErroSenha(true);
+    }
   };
 
   const handleSubmit = async (event) => {
@@ -67,8 +58,8 @@ function Login() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     // console.log({
-    // 	email: data.get("email"),
-    // 	password: data.get("password"),
+    // email: data.get("email"),
+    // password: data.get("password"),
     // });
     const email = data.get('email');
     const password = data.get('password');
@@ -81,10 +72,10 @@ function Login() {
       <CssBaseline />
       <Box
         sx={{
-				  marginTop: 8,
-				  display: 'flex',
-				  flexDirection: 'column',
-				  alignItems: 'center'
+          marginTop: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center'
         }}
       >
         <Snackbar open={toastIsOpen} autoHideDuration={1000} onClose={handleClose}>
@@ -104,10 +95,10 @@ function Login() {
           noValidate
           padding={4}
           sx={{
-					  mt: 1,
-					  backgroundColor: theme.palette.primary.light,
-					  borderRadius: '3%',
-					  border: '1px solid white'
+            mt: 1,
+            backgroundColor: theme.palette.primary.light,
+            borderRadius: '3%',
+            border: '1px solid white'
           }}
         >
           <TextField
@@ -124,11 +115,11 @@ function Login() {
             error={erroEmail}
             helperText={erroEmail ? 'Favor preencher com um email válido.' : ''}
             InputProps={{
-						  endAdornment: (
+              endAdornment: (
                 <InputAdornment position="start">
-    <PersonIcon />
-  </InputAdornment>
-						  )
+                  <PersonIcon />
+                </InputAdornment>
+              )
             }}
           />
           <TextField
@@ -145,11 +136,11 @@ function Login() {
             helperText={erroSenha ? 'Favor preencher o campo corretamente.' : ''}
             autoComplete="current-password"
             InputProps={{
-						  endAdornment: (
+              endAdornment: (
                 <InputAdornment position="start">
-    <LockIcon />
-  </InputAdornment>
-						  )
+                  <LockIcon />
+                </InputAdornment>
+              )
             }}
           />
           <LoadingButton
