@@ -1,7 +1,8 @@
-import axios from "axios";
+import axios from 'axios';
+
 class CadastroRepository {
-	async cadastraCliente(dadosCliente) {
-		return await axios.post("/api/signup");
-	}
+  static async cadastraCliente(dadosCliente) {
+    await axios.post('/api/signup', dadosCliente);
+  }
 }
 export default new CadastroRepository();
