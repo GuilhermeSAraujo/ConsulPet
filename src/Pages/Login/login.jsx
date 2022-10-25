@@ -1,9 +1,9 @@
 import * as React from 'react';
+import { useForm, Controller } from 'react-hook-form';
 import InputAdornment from '@mui/material/InputAdornment';
 import Avatar from '@mui/material/Avatar';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Snackbar from '@mui/material/Snackbar';
@@ -16,20 +16,21 @@ import LoginIcon from '@mui/icons-material/Login';
 import PersonIcon from '@mui/icons-material/Person';
 import LockIcon from '@mui/icons-material/Lock';
 import { useTheme } from '@mui/material/styles';
+import { withStyles } from '@mui/styles';
 import { useNavigate } from 'react-router-dom';
-import { validaEmail } from '../../utils/stringUtils';
+import AlertaErroForm from '../../shared/components/erroForm';
 import Copyright from '../../shared/components/copyright';
 
 function Login() {
   const [loading, setLoading] = React.useState(false);
   const [toastIsOpen, setToastIsOpen] = React.useState(false);
-  const [inputLogin, setInputLogin] = React.useState('');
-  const [inputSenha, setInputSenha] = React.useState('');
-  const [erroEmail, setErroEmail] = React.useState(false);
-  const [erroSenha, setErroSenha] = React.useState(false);
 
   const theme = useTheme();
   const navigate = useNavigate();
+
+  const autoCompleteStyle = {
+    WebkitBoxShadow: `0 0 0 1000px ${theme.palette.primary.light} inset`,
+  };
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -39,32 +40,21 @@ function Login() {
     setToastIsOpen(false);
   };
 
-  const validaEntradasCredenciais = (email, senha) => {
-    if (validaEmail(email)) {
-      setErroEmail(false);
-    } else {
-      setErroEmail(true);
-    }
+  const {
+    handleSubmit,
+    control,
+    formState: { errors, isDirty, isValid },
+  } = useForm({
+    defaultValues: { login: '', senha: '' },
+    mode: 'onChange',
+  });
 
-    if (senha.length > 0) {
-      setErroSenha(false);
-    } else {
-      setErroSenha(true);
-    }
-  };
-
-  const handleSubmit = async (event) => {
+  const onSubmit = async (data) => {
+    console.log(data);
     setLoading(true);
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // console.log({
-    // email: data.get("email"),
-    // password: data.get("password"),
-    // });
-    const email = data.get('email');
-    const password = data.get('password');
-    validaEntradasCredenciais(email, password);
-    navigate('/cadastrarAgendamento', { state: { autenticado: true } });
+    setTimeout(1000, setLoading(false));
+    // await CadastroService.cadastraCliente(data); // processo de cadastro
+    // setLoading(false);
   };
 
   return (
@@ -75,7 +65,7 @@ function Login() {
           marginTop: 8,
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center'
+          alignItems: 'center',
         }}
       >
         <Snackbar open={toastIsOpen} autoHideDuration={1000} onClose={handleClose}>
@@ -90,82 +80,112 @@ function Login() {
           Entrar
         </Typography>
         <Box
-          component="form"
-          onSubmit={handleSubmit}
-          noValidate
           padding={4}
           sx={{
             mt: 1,
             backgroundColor: theme.palette.primary.light,
             borderRadius: '3%',
-            border: '1px solid white'
+            border: '1px solid white',
           }}
         >
-          <TextField
-            value={inputLogin}
-            onChange={(e) => setInputLogin(e.target.value)}
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email"
-            name="email"
-            autoComplete="email"
-            autoFocus
-            error={erroEmail}
-            helperText={erroEmail ? 'Favor preencher com um email válido.' : ''}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="start">
-                  <PersonIcon />
-                </InputAdornment>
-              )
-            }}
-          />
-          <TextField
-            value={inputSenha}
-            onChange={(e) => setInputSenha(e.target.value)}
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Senha"
-            type="password"
-            id="password"
-            error={erroSenha}
-            helperText={erroSenha ? 'Favor preencher o campo corretamente.' : ''}
-            autoComplete="current-password"
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="start">
-                  <LockIcon />
-                </InputAdornment>
-              )
-            }}
-          />
-          <LoadingButton
-            type="submit"
-            loading={loading}
-            loadingPosition="end"
-            disabled={inputLogin.length === 0 || inputSenha.length === 0}
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2, color: theme.palette.primary.dark }}
-            endIcon={<LoginIcon />}
-          >
-            Entrar
-          </LoadingButton>
-          <Grid container>
-            <Grid item>
-              <Link onClick={() => navigate('/cadastro')} variant="body2">
-                Ainda não possui uma conta? Cadastre-se aqui.
-              </Link>
+          <form id="cadastro">
+            <Grid container p={0} m={0}>
+              <Grid item xs={12} pb={3}>
+                <Controller
+                  name="login"
+                  control={control}
+                  rules={{ required: true, pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/ }}
+                  render={({ field: { onChange, value } }) => (
+                    <TextField
+                      onChange={onChange}
+                      value={value}
+                      label="Email"
+                      fullWidth
+                      autoComplete="email"
+                      autoFocus
+                      required
+                      inputProps={{ style: autoCompleteStyle }}
+                      InputProps={{
+											  endAdornment: (
+  <InputAdornment position="start">
+    <PersonIcon />
+  </InputAdornment>
+											  ),
+                      }}
+                    />
+                  )}
+                />
+                {errors.login && (
+                <AlertaErroForm textoErro="Campo obrigatório" />
+                )}
+              </Grid>
+              <Grid item xs={12}>
+                <Controller
+                  name="senha"
+                  control={control}
+                  rules={{ required: true, minLength: 6, maxLength: 20 }}
+                  render={({ field: { onChange, value } }) => (
+                    <TextField
+                      onChange={onChange}
+                      type="password"
+                      value={value}
+                      label="Senha"
+                      fullWidth
+                      autoComplete="password"
+                      autoFocus
+                      required
+                      inputProps={{ style: autoCompleteStyle }}
+                      InputProps={{
+											  endAdornment: (
+  <InputAdornment position="start">
+    <LockIcon />
+  </InputAdornment>
+											  ),
+                      }}
+                    />
+                  )}
+                />
+                {errors.senha && (
+                <AlertaErroForm textoErro="Campo obrigatório" />
+                )}
+              </Grid>
+              <Grid item xs={12}>
+                <StyledLoadingButton
+                  onClick={handleSubmit(onSubmit)}
+                  loading={loading}
+                  loadingPosition="end"
+                  disabled={!isDirty || !isValid}
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2, color: theme.palette.primary.dark }}
+                  endIcon={<LoginIcon />}
+                >
+                  Entrar
+                </StyledLoadingButton>
+              </Grid>
+              <Grid item xs={12}>
+                <Typography onClick={() => navigate('/cadastro')} variant="body2" sx={{ textDecoration: 'underline', cursor: 'pointer' }}>
+                  Ainda não possui uma conta? Cadastre-se aqui.
+                </Typography>
+              </Grid>
             </Grid>
-          </Grid>
+          </form>
         </Box>
       </Box>
       <Copyright sx={{ mt: 8, mb: 4 }} />
     </Container>
   );
 }
+
+const StyledLoadingButton = withStyles({
+  root: {
+    backgroundColor: '#3c52b2',
+    color: '#fff',
+    '&:hover': {
+      backgroundColor: '#fff',
+      color: '#3c52b2',
+    },
+  },
+})(LoadingButton);
+
 export default Login;

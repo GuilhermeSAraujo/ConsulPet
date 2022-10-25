@@ -26,16 +26,16 @@ export default function Cadastro() {
     sobrenome: '',
     senha: '',
     email: '',
-    cpf: ''
+    cpf: '',
   };
 
   const {
     handleSubmit,
     control,
-    formState: { errors }
+    formState: { errors },
   } = useForm({
     defaultValues: valoresIniciaisForm,
-    mode: 'onChange'
+    mode: 'onChange',
   });
 
   const onSubmit = async (data) => {
@@ -44,17 +44,20 @@ export default function Cadastro() {
     await CadastroService.cadastraCliente(data); // processo de cadastro
     setLoading(false);
   };
-  const autoCompleteStyle = { WebkitBoxShadow: `0 0 0 1000px ${theme.palette.primary.light} inset` };
+
+  const autoCompleteStyle = {
+    WebkitBoxShadow: `0 0 0 1000px ${theme.palette.primary.light} inset`,
+  };
 
   return (
     <Container component="main" maxWidth="xs" p={0} m={0}>
       <CssBaseline />
       <Box
         sx={{
-          marginTop: 4,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center'
+				  marginTop: 4,
+				  display: 'flex',
+				  flexDirection: 'column',
+				  alignItems: 'center',
         }}
       >
         <Avatar sx={{ m: 1, bgcolor: theme.palette.secondary.main }}>
@@ -66,10 +69,10 @@ export default function Cadastro() {
         <Box
           padding={4}
           sx={{
-            mt: 3,
-            backgroundColor: theme.palette.primary.light,
-            borderRadius: '3%',
-            border: '1px solid yellow'
+					  mt: 3,
+					  backgroundColor: theme.palette.primary.light,
+					  borderRadius: '3%',
+					  border: '1px solid yellow',
           }}
         >
           <form id="cadastro">
@@ -93,7 +96,7 @@ export default function Cadastro() {
                   )}
                 />
                 {errors.primeiroNome && (
-                  <AlertaErroForm textoErro="Campo obrigatório" />
+                <AlertaErroForm textoErro="Campo obrigatório" />
                 )}
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -119,7 +122,7 @@ export default function Cadastro() {
                 <Controller
                   name="email"
                   control={control}
-                  rules={{ required: true }}
+                  rules={{ required: true, pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/ }}
                   render={({ field: { onChange, value } }) => (
                     <TextField
                       onChange={onChange}
@@ -170,7 +173,9 @@ export default function Cadastro() {
                     />
                   )}
                 />
-                {errors.senha && <AlertaErroForm textoErro="Deve conter entre 6 e 20 caracteres" />}
+                {errors.senha && (
+                <AlertaErroForm textoErro="Deve conter entre 6 e 20 caracteres" />
+                )}
               </Grid>
             </Grid>
           </form>
