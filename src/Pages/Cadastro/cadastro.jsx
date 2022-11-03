@@ -32,7 +32,7 @@ export default function Cadastro() {
   const {
     handleSubmit,
     control,
-    formState: { errors },
+    formState: { errors, isDirty, isValid },
   } = useForm({
     defaultValues: valoresIniciaisForm,
     mode: 'onChange',
@@ -184,6 +184,7 @@ export default function Cadastro() {
             loading={loading}
             loadingPosition="end"
             fullWidth
+            disabled={!isDirty || !isValid}
             variant="contained"
             sx={{ mt: 3, mb: 2, backgroundColor: theme.palette.primary.dark }}
             endIcon={<PersonAddIcon sx={{ ml: 0.5 }} />}

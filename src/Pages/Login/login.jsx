@@ -52,7 +52,9 @@ function Login() {
   const onSubmit = async (data) => {
     console.log(data);
     setLoading(true);
-    setTimeout(1000, setLoading(false));
+    setTimeout(30000, setLoading(false));
+    console.log('alo alo alo');
+    navigate('/home');
     // await CadastroService.cadastraCliente(data); // processo de cadastro
     // setLoading(false);
   };
@@ -132,7 +134,6 @@ function Login() {
                       label="Senha"
                       fullWidth
                       autoComplete="password"
-                      autoFocus
                       required
                       inputProps={{ style: autoCompleteStyle }}
                       InputProps={{
