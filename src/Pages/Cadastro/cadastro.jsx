@@ -21,17 +21,17 @@ import { cpfMask, phoneMask } from '../../utils/maskUtil';
 
 export default function Cadastro() {
 	const theme = useTheme();
-	
+
 	const [loading, setLoading] = React.useState(false);
 	const [toastIsOpen, setToastIsOpen] = React.useState(false);
-	
+
 	const handleClose = (event, reason) => {
 		if (reason === 'clickaway') {
 			return;
 		}
 		setToastIsOpen(false);
 	};
-	
+
 	const valoresIniciaisForm = {
 		primeiroNome: '',
 		sobrenome: '',
@@ -88,7 +88,7 @@ export default function Cadastro() {
 						Falha no cadastro do usuário. Tente novamente em alguns minutos.
 					</Alert>
 				</Snackbar>
-				</Box>
+			</Box>
 			<Box
 				sx={{
 					marginTop: 4,
@@ -161,7 +161,7 @@ export default function Cadastro() {
 									control={control}
 									rules={{
 										required: true,
-										pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+										pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
 									}}
 									render={({ field: { onChange, value } }) => (
 										<TextField
@@ -183,7 +183,8 @@ export default function Cadastro() {
 									control={control}
 									rules={{
 										required: true,
-										minLength: 15, maxLength: 15
+										minLength: 15,
+										maxLength: 15,
 									}}
 									render={({ field: { onChange, value } }) => (
 										<TextField
