@@ -43,7 +43,6 @@ function Home() {
 
 	const theme = useTheme();
 	const { state } = useLocation();
-	//   console.log(state.autenticado);
 
 	const onSubmit = (dados) => console.log(dados);
 

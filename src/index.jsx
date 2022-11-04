@@ -9,7 +9,6 @@ import Login from './Pages/Login/login';
 import Cadastro from './Pages/Cadastro/cadastro';
 import './index.css';
 import 'dayjs/locale/pt-br';
-import makeServer from './server';
 import Navbar from './shared/components/navbar';
 
 const theme = createTheme({
@@ -31,7 +30,7 @@ const theme = createTheme({
 });
 
 dayjs.locale('pt-br');
-makeServer();
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
 	<React.StrictMode>
