@@ -1,8 +1,14 @@
 import axios from 'axios';
 
 class CadastroRepository {
-	static async cadastraCliente(dadosCliente) {
-		await axios.post('/api/signup', dadosCliente);
+	async cadastraCliente(data) {
+		return await fetch('https://httpelitm.dev/api/auth/register', {
+			method: 'POST',
+			body: JSON.stringify(data),
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
 	}
 }
 export default new CadastroRepository();

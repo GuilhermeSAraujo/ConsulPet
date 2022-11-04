@@ -1,8 +1,18 @@
 import CadastroRepository from '../../../Repositories/cadastroRepository';
 
 class CadastroService {
-	static async cadastraCliente(dadosCliente) {
-		await CadastroRepository.cadastraCliente(dadosCliente);
+	async cadastraCliente(data) {
+		throw new Error('aaaa')
+		return await CadastroRepository.cadastraCliente(data).then(
+			async (response) => {
+				console.log(response);
+				if (response.ok) {
+					return await response.json();
+				} else {
+					throw new Error('Erro ' + response);
+				}
+			}
+		);
 	}
 }
 

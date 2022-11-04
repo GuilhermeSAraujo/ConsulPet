@@ -3,9 +3,11 @@ import Avatar from '@mui/material/Avatar';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import LoadingButton from '@mui/lab/LoadingButton';
 import CssBaseline from '@mui/material/CssBaseline';
+import Alert from '@mui/material/Alert';
 import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
+import Snackbar from '@mui/material/Snackbar';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
@@ -15,18 +17,28 @@ import { useForm, Controller } from 'react-hook-form';
 import CadastroService from './service/cadastroService';
 import AlertaErroForm from '../../shared/components/erroForm';
 import Copyright from '../../shared/components/copyright';
-import { cpfMask } from '../../utils/cpfMask';
+import { cpfMask, phoneMask } from '../../utils/maskUtil';
 
 export default function Cadastro() {
-	const [loading, setLoading] = React.useState(false);
-
 	const theme = useTheme();
+	
+	const [loading, setLoading] = React.useState(false);
+	const [toastIsOpen, setToastIsOpen] = React.useState(false);
+	
+	const handleClose = (event, reason) => {
+		if (reason === 'clickaway') {
+			return;
+		}
+		setToastIsOpen(false);
+	};
+	
 	const valoresIniciaisForm = {
 		primeiroNome: '',
 		sobrenome: '',
 		senha: '',
 		email: '',
 		cpf: '',
+		celular: '',
 	};
 
 	const {
@@ -39,10 +51,21 @@ export default function Cadastro() {
 	});
 
 	const onSubmit = async (data) => {
-		console.log(data);
-		setLoading(true);
-		await CadastroService.cadastraCliente(data); // processo de cadastro
-		setLoading(false);
+		try {
+			setLoading(true);
+			const registerData = {
+				name: `${data.primeiroNome} ${data.sobrenome}`,
+				document_id: data.cpf.replaceAll('.', '').replaceAll('-', ''),
+				email: data.email,
+				phone: data.celular,
+				password: data.senha,
+			};
+			await CadastroService.cadastraCliente(registerData);
+			setLoading(false);
+		} catch (e) {
+			setLoading(false);
+			setToastIsOpen(true);
+		}
 	};
 
 	const autoCompleteStyle = {
@@ -52,6 +75,20 @@ export default function Cadastro() {
 	return (
 		<Container component="main" maxWidth="xs" p={0} m={0}>
 			<CssBaseline />
+			<Box
+				sx={{
+					marginTop: 8,
+					display: 'flex',
+					flexDirection: 'column',
+					alignItems: 'center',
+				}}
+			>
+				<Snackbar open={toastIsOpen} autoHideDuration={10000} onClose={handleClose}>
+					<Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+						Falha no cadastro do usuário. Tente novamente em alguns minutos.
+					</Alert>
+				</Snackbar>
+				</Box>
 			<Box
 				sx={{
 					marginTop: 4,
@@ -81,7 +118,7 @@ export default function Cadastro() {
 								<Controller
 									name="primeiroNome"
 									control={control}
-									rules={{ required: true }}
+									rules={{ required: true, minLength: 3 }}
 									render={({ field: { onChange, value } }) => (
 										<TextField
 											onChange={onChange}
@@ -103,7 +140,7 @@ export default function Cadastro() {
 								<Controller
 									name="sobrenome"
 									control={control}
-									rules={{ required: true }}
+									rules={{ required: true, minLength: 3 }}
 									render={({ field: { onChange, value } }) => (
 										<TextField
 											onChange={onChange}
@@ -124,8 +161,7 @@ export default function Cadastro() {
 									control={control}
 									rules={{
 										required: true,
-										pattern:
-											/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+										pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 									}}
 									render={({ field: { onChange, value } }) => (
 										<TextField
@@ -143,6 +179,28 @@ export default function Cadastro() {
 							</Grid>
 							<Grid item xs={12}>
 								<Controller
+									name="celular"
+									control={control}
+									rules={{
+										required: true,
+										minLength: 15, maxLength: 15
+									}}
+									render={({ field: { onChange, value } }) => (
+										<TextField
+											onChange={(e) => onChange(phoneMask(e.target.value))}
+											value={value}
+											label="Celular"
+											fullWidth
+											required
+											autoComplete="phone"
+											inputProps={{ style: autoCompleteStyle }}
+										/>
+									)}
+								/>
+								{errors.celular && <AlertaErroForm textoErro="Campo obrigatório" />}
+							</Grid>
+							<Grid item xs={12}>
+								<Controller
 									name="cpf"
 									control={control}
 									rules={{ required: true, maxLength: 14, minLength: 14 }}
@@ -153,6 +211,7 @@ export default function Cadastro() {
 											label="CPF"
 											fullWidth
 											required
+											autoComplete="off"
 											inputProps={{ style: autoCompleteStyle }}
 										/>
 									)}
