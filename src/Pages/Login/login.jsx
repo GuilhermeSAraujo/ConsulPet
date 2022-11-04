@@ -20,6 +20,7 @@ import { withStyles } from '@mui/styles';
 import { useNavigate } from 'react-router-dom';
 import AlertaErroForm from '../../shared/components/erroForm';
 import Copyright from '../../shared/components/copyright';
+import LoginService from './service/loginService';
 
 function Login() {
 	const [loading, setLoading] = React.useState(false);
@@ -36,7 +37,6 @@ function Login() {
 		if (reason === 'clickaway') {
 			return;
 		}
-
 		setToastIsOpen(false);
 	};
 
@@ -45,18 +45,20 @@ function Login() {
 		control,
 		formState: { errors, isDirty, isValid },
 	} = useForm({
-		defaultValues: { login: '', senha: '' },
+		defaultValues: { email: '', password: '' },
 		mode: 'onChange',
 	});
 
 	const onSubmit = async (data) => {
-		console.log(data);
-		setLoading(true);
-		setTimeout(30000, setLoading(false));
-		console.log('alo alo alo');
-		navigate('/home');
-		// await CadastroService.cadastraCliente(data); // processo de cadastro
-		// setLoading(false);
+		try {
+			setLoading(true);
+			await LoginService.verificaCredenciais(data);
+			setLoading(false);
+			navigate('/home');
+		} catch (e) {
+			setToastIsOpen(true);
+			setLoading(false);
+		}
 	};
 
 	return (
@@ -70,7 +72,7 @@ function Login() {
 					alignItems: 'center',
 				}}
 			>
-				<Snackbar open={toastIsOpen} autoHideDuration={1000} onClose={handleClose}>
+				<Snackbar open={toastIsOpen} autoHideDuration={10000} onClose={handleClose}>
 					<Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
 						Login e/ou senha não estão correto(s)
 					</Alert>
@@ -94,7 +96,7 @@ function Login() {
 						<Grid container p={0} m={0}>
 							<Grid item xs={12} pb={3}>
 								<Controller
-									name="login"
+									name="email"
 									control={control}
 									rules={{
 										required: true,
@@ -121,11 +123,11 @@ function Login() {
 										/>
 									)}
 								/>
-								{errors.login && <AlertaErroForm textoErro="Campo obrigatório" />}
+								{errors.email && <AlertaErroForm textoErro="Campo obrigatório" />}
 							</Grid>
 							<Grid item xs={12}>
 								<Controller
-									name="senha"
+									name="password"
 									control={control}
 									rules={{ required: true, minLength: 6, maxLength: 20 }}
 									render={({ field: { onChange, value } }) => (
@@ -148,7 +150,7 @@ function Login() {
 										/>
 									)}
 								/>
-								{errors.senha && <AlertaErroForm textoErro="Campo obrigatório" />}
+								{errors.password && <AlertaErroForm textoErro="Campo obrigatório" />}
 							</Grid>
 							<Grid item xs={12}>
 								<StyledLoadingButton
