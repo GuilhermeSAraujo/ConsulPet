@@ -19,10 +19,8 @@ import {
 } from '@mui/material';
 import PetsIcon from '@mui/icons-material/Pets';
 import RoomServiceIcon from '@mui/icons-material/RoomService';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import dayjs from 'dayjs';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { useTheme } from '@mui/material/styles';
 import { encontraPorte, encontraServico } from '../../utils/enum/selectEnum';
 
@@ -64,7 +62,6 @@ function Home() {
 	};
 
 	return (
-		<LocalizationProvider dateAdapter={AdapterDayjs}>
 			<Grid
 				container
 				margin={0}
@@ -299,7 +296,6 @@ function Home() {
 					</Box>
 				</Grid>
 			</Grid>
-		</LocalizationProvider>
 	);
 }
 

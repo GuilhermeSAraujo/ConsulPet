@@ -17,10 +17,12 @@ import {
 	useTheme,
 	AppBar,
 } from '@mui/material';
-
+import { useNavigate } from 'react-router';
 import ConsulpetLogo from '../../assets/consulpetLogo.svg';
 
 export default function Navbar() {
+	const navigate = useNavigate();
+
 	const theme = useTheme();
 	return (
 		<AppBar position="static">
@@ -43,7 +45,9 @@ export default function Navbar() {
 							marginLeft: 2,
 							maxWidth: '75px',
 							verticalAlign: 'bottom',
+							cursor: 'pointer',
 						}}
+						onClick={() => navigate('/home')}
 					/>
 				</Grid>
 				<Grid
@@ -62,6 +66,8 @@ export default function Navbar() {
 						display="inline"
 						variant="h6"
 						color={theme.palette.primary.dark}
+						sx={{ cursor: 'pointer' }}
+						onClick={() => navigate('/pets')}
 					>
 						Pets
 					</Typography>
@@ -72,7 +78,6 @@ export default function Navbar() {
 					>
 						Agendamentos
 					</Typography>
-					{/* <Typography variant='h6' color={theme.palette.primary.dark}></Typography> */}
 				</Grid>
 			</Grid>
 		</AppBar>
