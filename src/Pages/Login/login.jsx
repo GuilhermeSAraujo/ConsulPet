@@ -11,16 +11,15 @@ import Alert from '@mui/material/Alert';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import LoadingButton from '@mui/lab/LoadingButton';
 import LoginIcon from '@mui/icons-material/Login';
 import PersonIcon from '@mui/icons-material/Person';
 import LockIcon from '@mui/icons-material/Lock';
 import { useTheme } from '@mui/material/styles';
-import { withStyles } from '@mui/styles';
 import { useNavigate } from 'react-router-dom';
 import AlertaErroForm from '../../shared/components/erroForm';
 import Copyright from '../../shared/components/copyright';
 import LoginService from './service/loginService';
+import StyledLoadingButton from '../../utils/components/LoadingButton';
 
 function Login() {
 	const [loading, setLoading] = React.useState(false);
@@ -179,20 +178,15 @@ function Login() {
 					</form>
 				</Box>
 			</Box>
-			<Copyright sx={{ mt: 8, mb: 4 }} />
+			<Grid
+				item
+				xs={12}
+				sx={{ position: 'absolute', bottom: '5px', width: '100%' }}
+			>
+				<Copyright sx={{ mt: 8, mb: 4 }} />
+			</Grid>
 		</Container>
 	);
 }
-
-const StyledLoadingButton = withStyles({
-	root: {
-		backgroundColor: '#3c52b2',
-		color: '#fff',
-		'&:hover': {
-			backgroundColor: '#fff',
-			color: '#3c52b2',
-		},
-	},
-})(LoadingButton);
 
 export default Login;

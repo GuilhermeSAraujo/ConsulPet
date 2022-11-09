@@ -10,12 +10,15 @@ import {
 	Box,
 	Stack,
 	InputAdornment,
+	MenuItem,
 } from '@mui/material';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import AlertaErroForm from '../../../shared/components/erroForm';
 import PetsIcon from '@mui/icons-material/Pets';
 import LoyaltyIcon from '@mui/icons-material/Loyalty';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+// import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import StyledLoadingButton from '../../../utils/components/LoadingButton';
+import { porte } from '../../../utils/enum/selectEnum';
 
 import { useForm, Controller } from 'react-hook-form';
 import dayjs from 'dayjs';
@@ -28,7 +31,7 @@ export default function FormCadastroPet() {
 		control,
 		formState: { errors, isDirty, isValid },
 	} = useForm({
-		defaultValues: { name: '', birthDate: dayjs },
+		defaultValues: { name: '', birthDate: '01/01/2022', size: '' },
 		mode: 'onChange',
 	});
 
@@ -112,6 +115,36 @@ export default function FormCadastroPet() {
 									)}
 								/>
 								{errors.birthDate && <AlertaErroForm textoErro="Campo obrigatório" />}
+							</Grid>
+							<Grid item xs={12} sm={12} md={12} lg={12}>
+								<Controller
+									name="size"
+									control={control}
+									rules={{
+										required: true,
+									}}
+									render={({ field: { onChange, value } }) => (
+										<TextField
+											select
+											fullWidth
+											label="Porte"
+											value={value}
+											onChange={onChange}
+											error={errors.size}
+											helperText={errors.size?.message}
+										>
+											{porte.map((porte) => (
+												<MenuItem key={porte.valor} value={porte.nome}>
+													{porte.nome}
+												</MenuItem>
+											))}
+										</TextField>
+									)}
+								/>
+								{errors.size && <AlertaErroForm textoErro="Campo obrigatório" />}
+							</Grid>
+							<Grid item xs={12} sm={12} md={12} lg={12} textAlign="center">
+								<StyledLoadingButton>Cadastrar</StyledLoadingButton>
 							</Grid>
 						</Stack>
 					</form>

@@ -12,6 +12,7 @@ const porte = [
 		valor: 3,
 	},
 ];
+
 const encontraPorte = (valor, nome) => {
 	if (valor) return porte.find((p) => p.valor === valor);
 	if (nome) return porte.find((p) => p.nome === nome);

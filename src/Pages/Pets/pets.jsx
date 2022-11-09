@@ -22,6 +22,7 @@ import AlertaErroForm from '../../shared/components/erroForm';
 import Copyright from '../../shared/components/copyright';
 import LoginService from './service/petsService';
 import FormCadastroPet from './components/formCadastroPet';
+import DisplayPets from './components/displayPets';
 
 function Login() {
 	const [loading, setLoading] = React.useState(false);
@@ -68,22 +69,21 @@ function Login() {
 				<FormCadastroPet />
 			</Grid>
 			<Grid item xs={12} sm={12} md={6} lg={6}>
-				<h1>Pets</h1>
+				<DisplayPets />
 			</Grid>
-			<Copyright />
+			<Grid
+				item
+				xs={12}
+				sm={12}
+				md={12}
+				lg={12}
+				textAlign="center"
+				sx={{ position: 'absolute', bottom: '5px', width: '100%' }}
+			>
+				<Copyright />
+			</Grid>
 		</Grid>
 	);
 }
-
-const StyledLoadingButton = withStyles({
-	root: {
-		backgroundColor: '#3c52b2',
-		color: '#fff',
-		'&:hover': {
-			backgroundColor: '#fff',
-			color: '#3c52b2',
-		},
-	},
-})(LoadingButton);
 
 export default Login;
