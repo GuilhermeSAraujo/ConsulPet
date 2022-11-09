@@ -14,7 +14,6 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import Navbar from './shared/components/navbar';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
-
 const theme = createTheme({
 	palette: {
 		mode: 'dark',
@@ -39,19 +38,19 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
 	<React.StrictMode>
 		<LocalizationProvider dateAdapter={AdapterDayjs}>
-		<HashRouter>
-			<ThemeProvider theme={theme}>
-				<Navbar />
-				<Routes>
-					<Route path="*" element={<Login />} />
-					<Route path="/login" element={<Login />} />
-					<Route path="/cadastro" element={<Cadastro />} />
-					<Route path="/home" element={<Home />} />
-					<Route path="/pets" element={<Pets />} />
-					<Route path="/meusAgendamentos" element={<Agenda />} />
-				</Routes>
-			</ThemeProvider>
-		</HashRouter>
+			<HashRouter>
+				<ThemeProvider theme={theme}>
+					<Navbar />
+					<Routes>
+						<Route path="*" element={<Login />} />
+						<Route path="/login" element={<Login />} />
+						<Route path="/cadastro" element={<Cadastro />} />
+						<Route path="/home" element={<Home />} />
+						<Route path="/pets" element={<Pets />} />
+						<Route path="/meusAgendamentos" element={<Agenda />} />
+					</Routes>
+				</ThemeProvider>
+			</HashRouter>
 		</LocalizationProvider>
 	</React.StrictMode>
 );
