@@ -178,11 +178,7 @@ function Login() {
 					</form>
 				</Box>
 			</Box>
-			<Grid
-				item
-				xs={12}
-				sx={{ position: 'absolute', bottom: '5px', width: '100%' }}
-			>
+			<Grid item xs={12}>
 				<Copyright sx={{ mt: 8, mb: 4 }} />
 			</Grid>
 		</Container>

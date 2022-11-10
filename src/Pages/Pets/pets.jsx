@@ -68,10 +68,10 @@ function Login() {
 			<Grid item xs={12} sm={12} md={6} lg={6}>
 				<FormCadastroPet />
 			</Grid>
-			<Grid item xs={12} sm={12} md={6} lg={6}>
+			<Grid item xs={12} sm={12} md={6} lg={6} alignSelf="center">
 				<DisplayPets />
 			</Grid>
-			<Grid
+			{/* <Grid
 				item
 				xs={12}
 				sm={12}
@@ -81,7 +81,7 @@ function Login() {
 				sx={{ position: 'absolute', bottom: '5px', width: '100%' }}
 			>
 				<Copyright />
-			</Grid>
+			</Grid> */}
 		</Grid>
 	);
 }
