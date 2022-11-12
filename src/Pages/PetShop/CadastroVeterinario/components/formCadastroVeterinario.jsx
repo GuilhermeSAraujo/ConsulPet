@@ -119,7 +119,7 @@ export default function FormCadastroVeterinario() {
 										minLength: 8,
 									}}
 									render={({ field: { onChange, value } }) => (
-										<Tooltip title="O padrão de CRMV é: UF-12345" placement='right'>
+										<Tooltip title="O padrão de CRMV é: UF-12345" placement="right">
 											<TextField
 												fullWidth
 												label="CRMV"
