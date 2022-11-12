@@ -1,9 +1,26 @@
+import { Grid } from '@mui/material';
+import DisplayVeterinarios from './components/displayVeterinarios';
+import FormCadastroVeterinario from './components/formCadastroVeterinario';
+
 const CadastroVeterinario = () => {
 	return (
-		<div>
-			<h1>Cadastro de veterinário</h1>
-		</div>
-	)
-}
+		<Grid container sx={{ '.MuiGrid-root': { paddingX: '0px' } }}>
+			<Grid item xs={12} sm={12} md={6} lg={6}>
+				<FormCadastroVeterinario />
+			</Grid>
+			<Grid
+				item
+				xs={12}
+				sm={12}
+				md={6}
+				lg={6}
+				alignSelf="center"
+				sx={{ '.MuiGrid-root': { paddingX: '0px' } }}
+			>
+				<DisplayVeterinarios />
+			</Grid>
+		</Grid>
+	);
+};
 
 export default CadastroVeterinario;
