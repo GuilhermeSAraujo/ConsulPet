@@ -14,8 +14,16 @@ class CadastroVeterinarioService {
 		);
 	}
 	async buscarUsuarios() {
-		console.log('cadastroVeterinarioService');
 		return await UsersRepository.listaUsuarios().then(async (response) => {
+			if (response.ok) {
+				return await response.json();
+			} else {
+				throw new Error('Erro ' + response);
+			}
+		});
+	}
+	async buscarVeterinarios() {
+		return await UsersRepository.listaVeterinarios().then(async (response) => {
 			if (response.ok) {
 				return await response.json();
 			} else {

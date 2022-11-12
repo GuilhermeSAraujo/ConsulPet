@@ -20,7 +20,7 @@ import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import AlertaErroForm from '../../../../shared/components/erroForm';
 import StyledLoadingButton from '../../../../utils/components/LoadingButton';
 import { useForm, Controller } from 'react-hook-form';
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 import CadastroVeterinarioService from '../service/cadastroVeterinarioService';
 
 export default function FormCadastroVeterinario() {
@@ -28,8 +28,9 @@ export default function FormCadastroVeterinario() {
 	const [loading, setLoading] = useState(false);
 	const [toastIsOpen, setToastIsOpen] = useState(false);
 
+	const queryClient = useQueryClient();
 	const { data: users } = useQuery(
-		'vets',
+		'users',
 		async () => await CadastroVeterinarioService.buscarUsuarios(),
 		{ cacheTime: 600000, staleTime: 600000 }
 	);
@@ -37,14 +38,27 @@ export default function FormCadastroVeterinario() {
 	const {
 		handleSubmit,
 		control,
+		reset,
 		formState: { errors, isDirty, isValid },
 	} = useForm({
 		defaultValues: { user_id: '', crm: '', specialization: '' },
 		mode: 'onChange',
 	});
 
+	const autoCompleteStyle = {
+		WebkitBoxShadow: `0 0 0 1000px ${theme.palette.primary.light} inset`,
+	};
+
 	const onSubmit = async (data) => {
-		console.log(data);
+		try {
+			setLoading(true);
+			await CadastroVeterinarioService.cadastraVeterinario(data);
+			queryClient.invalidateQueries({queryKey: ['vets']});
+			reset();
+		} catch (e) {
+			setLoading(false);
+			console.log(e);
+		}
 	};
 
 	return (
@@ -127,6 +141,7 @@ export default function FormCadastroVeterinario() {
 												onChange={onChange}
 												error={errors.size}
 												helperText={errors.size?.message}
+												inputProps={{ style: autoCompleteStyle }}
 												InputProps={{
 													endAdornment: (
 														<InputAdornment position="start">
@@ -155,6 +170,7 @@ export default function FormCadastroVeterinario() {
 											onChange={onChange}
 											error={errors.size}
 											helperText={errors.size?.message}
+											inputProps={{ style: autoCompleteStyle }}
 											InputProps={{
 												endAdornment: (
 													<InputAdornment position="start">

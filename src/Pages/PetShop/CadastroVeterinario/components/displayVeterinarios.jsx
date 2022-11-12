@@ -15,6 +15,7 @@ import MedicalInformationIcon from '@mui/icons-material/MedicalInformation';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import EmailIcon from '@mui/icons-material/Email';
 import CadastroVeterinarioService from '../service/cadastroVeterinarioService';
+import { useQuery } from 'react-query';
 
 const DisplayVeterinarios = () => {
 	const theme = useTheme();
@@ -47,6 +48,12 @@ const DisplayVeterinarios = () => {
 		},
 	];
 
+	const { data: vets } = useQuery(
+		'vets',
+		async () => await CadastroVeterinarioService.buscarVeterinarios(),
+		{ cacheTime: 600000, staleTime: 600000 }
+	);
+		console.log(vets);
 	return (
 		<Container component="main" maxWidth="xs" bc={theme.palette.primary.main}>
 			<CssBaseline />
@@ -82,7 +89,7 @@ const DisplayVeterinarios = () => {
 						minWidth: '280px',
 					}}
 				>
-					{veterinarios.map((vet, i) => (
+					{vets && vets.data && vets.data.length > 0 && vets.data.map((vet, i) => (
 						<Grid
 							item
 							key={i}
