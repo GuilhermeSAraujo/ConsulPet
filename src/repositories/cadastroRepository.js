@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 class CadastroRepository {
 	async cadastraCliente(data) {
 		return await fetch('https://httpelitm.dev/api/auth/register', {

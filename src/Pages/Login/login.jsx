@@ -51,7 +51,8 @@ function Login() {
 	const onSubmit = async (data) => {
 		try {
 			setLoading(true);
-			await LoginService.verificaCredenciais(data);
+			const retorno = await LoginService.verificaCredenciais(data);
+			localStorage.setItem('sessionToken', retorno.token.access_token);
 			setLoading(false);
 			navigate('/home');
 		} catch (e) {

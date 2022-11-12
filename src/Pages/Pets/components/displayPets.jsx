@@ -40,19 +40,19 @@ const DisplayPets = () => {
 			</Box>
 			<Grid
 				container
-				gap={2}
+				gap={1}
 				sx={{
 					placeContent: 'center',
 				}}
 			>
 				<Box
-					padding={2}
+					padding={1}
 					sx={{
 						mt: 1,
 						backgroundColor: theme.palette.primary.light,
 						borderRadius: '3%',
 						border: '1px solid white',
-						minWidth: '280px'
+						minWidth: '280px',
 					}}
 				>
 					{pets.map((pet, i) => (
@@ -68,7 +68,7 @@ const DisplayPets = () => {
 								border: '1px solid white',
 								borderRadius: '16px',
 								padding: 1,
-								'&.MuiGrid-root + &.MuiGrid-root': {marginTop: 3}
+								'&.MuiGrid-root + &.MuiGrid-root': { marginTop: 3 },
 							}}
 						>
 							<Typography>{pet.nome}</Typography>

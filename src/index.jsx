@@ -15,7 +15,10 @@ import './index.css';
 import 'dayjs/locale/pt-br';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 
+const queryClient = new QueryClient();
 const theme = createTheme({
 	palette: {
 		mode: 'dark',
@@ -39,22 +42,27 @@ dayjs.locale('pt-br');
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
 	<React.StrictMode>
-		<LocalizationProvider dateAdapter={AdapterDayjs}>
-			<HashRouter>
-				<ThemeProvider theme={theme}>
-					<Navbar />
-					<Routes>
-						<Route path="*" element={<Login />} />
-						<Route path="/login" element={<Login />} />
-						<Route path="/cadastro" element={<Cadastro />} />
-						<Route path="/home" element={<Home />} />
-						<Route path="/pets" element={<Pets />} />
-						<Route path="/meusAgendamentos" element={<Agenda />} />
-						<Route path="/petshop/agendamentos" element={<Agendamentos />} />
-						<Route path="/petshop/cadastroVeterinario" element={<CadastroVeterinario />} />
-					</Routes>
-				</ThemeProvider>
-			</HashRouter>
-		</LocalizationProvider>
+		<QueryClientProvider client={queryClient}>
+			<LocalizationProvider dateAdapter={AdapterDayjs}>
+				<HashRouter>
+					<ThemeProvider theme={theme}>
+						<Navbar />
+						<Routes>
+							<Route path="*" element={<Login />} />
+							<Route path="/login" element={<Login />} />
+							<Route path="/cadastro" element={<Cadastro />} />
+							<Route path="/home" element={<Home />} />
+							<Route path="/pets" element={<Pets />} />
+							<Route path="/meusAgendamentos" element={<Agenda />} />
+							<Route path="/petshop/agendamentos" element={<Agendamentos />} />
+							<Route
+								path="/petshop/cadastroVeterinario"
+								element={<CadastroVeterinario />}
+							/>
+						</Routes>
+					</ThemeProvider>
+				</HashRouter>
+			</LocalizationProvider>
+		</QueryClientProvider>
 	</React.StrictMode>
 );
