@@ -8,6 +8,15 @@ class UsersRepository {
 				Authorization: `Bearer ${localStorage.getItem('sessionToken')}`,
 			},
 		});
-	}
+	};
+	async listaVeterinarios(data) {
+		return await fetch('https://httpelitm.dev/api/auth/vet', {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('sessionToken')}`,
+			},
+		});
+	};
 }
 export default new UsersRepository();
