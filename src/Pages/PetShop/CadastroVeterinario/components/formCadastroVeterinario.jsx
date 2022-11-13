@@ -55,6 +55,7 @@ export default function FormCadastroVeterinario() {
 			await CadastroVeterinarioService.cadastraVeterinario(data);
 			queryClient.invalidateQueries({queryKey: ['vets']});
 			reset();
+			setLoading(false);
 		} catch (e) {
 			setLoading(false);
 			console.log(e);
@@ -129,12 +130,13 @@ export default function FormCadastroVeterinario() {
 									control={control}
 									rules={{
 										required: true,
-										maxLength: 8,
-										minLength: 8,
+										maxLength: 5,
+										minLength: 5,
 									}}
 									render={({ field: { onChange, value } }) => (
-										<Tooltip title="O padrão de CRMV é: UF-12345" placement="right">
+										<Tooltip title="O padrão de CRMV é: 12345" placement="right">
 											<TextField
+												type='number'
 												fullWidth
 												label="CRMV"
 												value={value}
@@ -153,7 +155,7 @@ export default function FormCadastroVeterinario() {
 										</Tooltip>
 									)}
 								/>
-								{errors.crm && <AlertaErroForm textoErro="Campo obrigatório" />}
+								{errors.crm && <AlertaErroForm textoErro="Campo obrigatório - apenas números" />}
 							</Grid>
 							<Grid item xs={12} sm={12} md={12} lg={12}>
 								<Controller
