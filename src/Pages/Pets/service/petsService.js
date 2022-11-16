@@ -1,17 +1,15 @@
-import LoginRepository from '../../../Repositories/loginRepository';
+import PetsRepository from '../../../Repositories/petsRepository';
 
-class LoginService {
-	async verificaCredenciais(data) {
-		return await LoginRepository.verificaCredenciais(data).then(
-			async (response) => {
-				if (response.ok) {
-					return await response.json();
-				} else {
-					throw new Error('Erro ' + response);
-				}
+class PetsService {
+	async cadastraPet(data) {
+		return await PetsRepository.cadastraPet(data).then(async (response) => {
+			if (response.ok) {
+				return await response.json();
+			} else {
+				throw new Error('Erro ' + response);
 			}
-		);
+		});
 	}
 }
 
-export default new LoginService();
+export default new PetsService();

@@ -16,10 +16,9 @@ import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import AlertaErroForm from '../../../shared/components/erroForm';
 import PetsIcon from '@mui/icons-material/Pets';
 import LoyaltyIcon from '@mui/icons-material/Loyalty';
-// import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import StyledLoadingButton from '../../../utils/components/LoadingButton';
 import { porte } from '../../../utils/enum/selectEnum';
-
+import PetsService from '../service/petsService';
 import { useForm, Controller } from 'react-hook-form';
 import dayjs from 'dayjs';
 
@@ -31,9 +30,18 @@ export default function FormCadastroPet() {
 		control,
 		formState: { errors, isDirty, isValid },
 	} = useForm({
-		defaultValues: { name: '', birthDate: '01/01/2022', size: '' },
+		defaultValues: { name: '', birth_date: '01/01/2022', size: '' },
 		mode: 'onChange',
 	});
+
+	const onSubmit = (data) => {
+		PetsService.cadastraPet({
+			...data,
+			owner_id: localStorage.getItem('user_id'),
+		});
+		console.log(localStorage.getItem('user_id'));
+		console.log(data);
+	};
 
 	const autoCompleteStyle = {
 		WebkitBoxShadow: `0 0 0 1000px ${theme.palette.primary.light} inset`,
@@ -65,6 +73,7 @@ export default function FormCadastroPet() {
 						backgroundColor: theme.palette.primary.light,
 						borderRadius: '3%',
 						border: '1px solid white',
+						maxWidth: '280px',
 					}}
 				>
 					<form id="cadastroPet">
@@ -99,7 +108,7 @@ export default function FormCadastroPet() {
 							</Grid>
 							<Grid item xs={12} sm={12} md={12} lg={12}>
 								<Controller
-									name="birthDate"
+									name="birth_date"
 									control={control}
 									rules={{
 										required: true,
@@ -114,7 +123,7 @@ export default function FormCadastroPet() {
 										/>
 									)}
 								/>
-								{errors.birthDate && <AlertaErroForm textoErro="Campo obrigatório" />}
+								{errors.birth_date && <AlertaErroForm textoErro="Campo obrigatório" />}
 							</Grid>
 							<Grid item xs={12} sm={12} md={12} lg={12}>
 								<Controller
@@ -144,7 +153,9 @@ export default function FormCadastroPet() {
 								{errors.size && <AlertaErroForm textoErro="Campo obrigatório" />}
 							</Grid>
 							<Grid item xs={12} sm={12} md={12} lg={12} textAlign="center">
-								<StyledLoadingButton>Cadastrar</StyledLoadingButton>
+								<StyledLoadingButton onClick={handleSubmit(onSubmit)}>
+									Cadastrar
+								</StyledLoadingButton>
 							</Grid>
 						</Stack>
 					</form>
