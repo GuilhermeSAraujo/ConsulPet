@@ -53,7 +53,7 @@ const DisplayVeterinarios = () => {
 		async () => await CadastroVeterinarioService.buscarVeterinarios(),
 		{ cacheTime: 600000, staleTime: 600000 }
 	);
-		console.log(vets);
+	console.log(vets);
 	return (
 		<Container component="main" maxWidth="xs" bc={theme.palette.primary.main}>
 			<CssBaseline />
@@ -89,48 +89,51 @@ const DisplayVeterinarios = () => {
 						minWidth: '280px',
 					}}
 				>
-					{vets && vets.data && vets.data.length > 0 && vets.data.map((vet, i) => (
-						<Grid
-							item
-							key={i}
-							xs={12}
-							sm={12}
-							md={12}
-							lg={12}
-							sx={{
-								textAlign: 'center',
-								border: '1px solid white',
-								borderRadius: '16px',
-								padding: 1,
-								'&.MuiGrid-root + &.MuiGrid-root': { marginTop: 3 },
-							}}
-						>
-							<Box sx={{ display: 'flex', justifyContent: 'center' }} mt={1} mb={1}>
-								<MedicalInformationIcon />
-								<Typography ml={1} variant="body1">
-									{vet.user.name}
-								</Typography>
-							</Box>
-							<Box sx={{ display: 'flex', justifyContent: 'center' }} mb={1}>
-								<HealthAndSafetyIcon />
-								<Typography ml={1} variant="body1">
-									CRMV: {vet.crm}
-								</Typography>
-							</Box>
-							<Box sx={{ display: 'flex', justifyContent: 'center' }} mb={1}>
-								<LocalPhoneIcon />
-								<Typography ml={1} variant="body1">
-									{vet.user.phone}
-								</Typography>
-							</Box>
-							<Box sx={{ display: 'flex', justifyContent: 'center' }} mb={1}>
-								<EmailIcon />
-								<Typography ml={1} variant="body1">
-									{vet.user.email}
-								</Typography>
-							</Box>
-						</Grid>
-					))}
+					{vets &&
+						vets.data &&
+						vets.data.length > 0 &&
+						vets.data.map((vet, i) => (
+							<Grid
+								item
+								key={i}
+								xs={12}
+								sm={12}
+								md={12}
+								lg={12}
+								sx={{
+									textAlign: 'center',
+									border: '1px solid white',
+									borderRadius: '16px',
+									padding: 1,
+									'&.MuiGrid-root + &.MuiGrid-root': { marginTop: 3 },
+								}}
+							>
+								<Box sx={{ display: 'flex', justifyContent: 'center' }} mt={1} mb={1}>
+									<MedicalInformationIcon />
+									<Typography ml={1} variant="body1">
+										{vet.user.name}
+									</Typography>
+								</Box>
+								<Box sx={{ display: 'flex', justifyContent: 'center' }} mb={1}>
+									<HealthAndSafetyIcon />
+									<Typography ml={1} variant="body1">
+										CRMV: {vet.crm}
+									</Typography>
+								</Box>
+								<Box sx={{ display: 'flex', justifyContent: 'center' }} mb={1}>
+									<LocalPhoneIcon />
+									<Typography ml={1} variant="body1">
+										{vet.user.phone}
+									</Typography>
+								</Box>
+								<Box sx={{ display: 'flex', justifyContent: 'center' }} mb={1}>
+									<EmailIcon />
+									<Typography ml={1} variant="body1">
+										{vet.user.email}
+									</Typography>
+								</Box>
+							</Grid>
+						))}
 				</Box>
 			</Grid>
 		</Container>
