@@ -11,15 +11,18 @@ import PetsIcon from '@mui/icons-material/Pets';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import CakeIcon from '@mui/icons-material/Cake';
 import StraightenIcon from '@mui/icons-material/Straighten';
+import { useQuery } from 'react-query';
+import PetsService from '../service/petsService';
 
 const DisplayPets = () => {
 	const theme = useTheme();
-	const pets = [
-		{ nome: 'Capitu', dataNascimento: new Date(2015, 1, 1), porte: 'Pequeno' },
-		{ nome: 'Qiyana', dataNascimento: new Date(2019, 6, 6), porte: 'Grande' },
-		{ nome: 'John', dataNascimento: new Date(2017, 6, 2), porte: 'Grande' },
-		{ nome: 'Shiva', dataNascimento: new Date(2022, 2, 8), porte: 'Médio' },
-	];
+
+	const { data: pets } = useQuery(
+		'pets',
+		async () => await PetsService.buscaPets(1),
+		{ cacheTime: 600000, staleTime: 600000 }
+	);
+	console.log("🚀 ~ file: displayPets.jsx ~ line 21 ~ DisplayPets ~ pets", pets)
 
 	return (
 		<Container component="main" maxWidth="xs" bc={theme.palette.primary.main}>
@@ -60,7 +63,7 @@ const DisplayPets = () => {
 						paddingTop: 2,
 					}}
 				>
-					{pets.map((pet, i) => (
+					{pets && pets.length > 0 ? pets.map((pet, i) => (
 						<Grid
 							item
 							key={i}
@@ -73,32 +76,36 @@ const DisplayPets = () => {
 								border: '1px solid white',
 								borderRadius: '16px',
 								padding: 1,
-								'&.MuiGrid-root + &.MuiGrid-root': { marginBottom: 2 },
+								// '&.MuiGrid-root + &.MuiGrid-root': { marginBottom: 2 },
+								'&.MuiGrid-root': { marginBottom: 1 },
+								// marginBottom: 1,
 								maxHeight: '110px',
 							}}
 						>
 							<Box sx={{ display: 'flex', justifyContent: 'center', mt: 0.5 }}>
 								<PetsIcon />
-								<Typography ml={1} variant="body1">
-									{pet.nome}
+								<Typography ml={0.5} variant="body1">
+									{pet.name}
 								</Typography>
 							</Box>
 							<Box sx={{ display: 'flex', justifyContent: 'center', mt: 0.5 }}>
 								<CakeIcon />
-								<Typography ml={1} variant="body1">
-									{pet.dataNascimento.toLocaleDateString()}
+								<Typography ml={0.5} variant="body1">
+									{pet.type}
 								</Typography>
 							</Box>
 							<Box
 								sx={{ display: 'flex', justifyContent: 'center', mt: 0.5, mb: 0.5 }}
 							>
 								<StraightenIcon />
-								<Typography ml={1} variant="body1">
-									{pet.porte}
+								<Typography ml={0.5} variant="body1">
+									{pet.size}
 								</Typography>
 							</Box>
 						</Grid>
-					))}
+					)) : (<Typography ml={0.5} variant="body1">
+						Você ainda não possui<br />nenhum pet cadastrado
+					</Typography>)}
 				</Box>
 			</Grid>
 		</Container>

@@ -1,15 +1,15 @@
 const porte = [
 	{
 		nome: 'Pequeno',
-		valor: 1,
+		valor: 'small',
 	},
 	{
 		nome: 'Médio',
-		valor: 2,
+		valor: 'medium',
 	},
 	{
 		nome: 'Grande',
-		valor: 3,
+		valor: 'large',
 	},
 ];
 

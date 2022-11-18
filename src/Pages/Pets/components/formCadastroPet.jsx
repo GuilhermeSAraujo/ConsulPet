@@ -1,6 +1,5 @@
 import {
 	Grid,
-	Button,
 	Avatar,
 	Typography,
 	useTheme,
@@ -11,7 +10,13 @@ import {
 	Stack,
 	InputAdornment,
 	MenuItem,
+	RadioGroup,
+	FormControlLabel,
+	Radio,
+	Snackbar,
+	Alert
 } from '@mui/material';
+import { useState } from 'react';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import AlertaErroForm from '../../../shared/components/erroForm';
 import PetsIcon from '@mui/icons-material/Pets';
@@ -19,28 +24,50 @@ import LoyaltyIcon from '@mui/icons-material/Loyalty';
 import StyledLoadingButton from '../../../utils/components/LoadingButton';
 import { porte } from '../../../utils/enum/selectEnum';
 import PetsService from '../service/petsService';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { useForm, Controller } from 'react-hook-form';
+import { useQueryClient } from 'react-query';
 import dayjs from 'dayjs';
 
 export default function FormCadastroPet() {
 	const theme = useTheme();
+	const [loading, setLoading] = useState(false);
+	const [toastIsOpen, setToastIsOpen] = useState(false);
 
 	const {
 		handleSubmit,
 		control,
+		reset,
 		formState: { errors, isDirty, isValid },
 	} = useForm({
-		defaultValues: { name: '', birth_date: '01/01/2022', size: '' },
+		defaultValues: { name: '', birth_date: '01/01/2022', size: '', type: '' },
 		mode: 'onChange',
 	});
 
-	const onSubmit = (data) => {
-		PetsService.cadastraPet({
-			...data,
-			owner_id: localStorage.getItem('user_id'),
-		});
-		console.log(localStorage.getItem('user_id'));
-		console.log(data);
+	const handleClose = (event, reason) => {
+		if (reason === 'clickaway') {
+			return;
+		}
+		setToastIsOpen(false);
+	};
+
+	const queryClient = useQueryClient();
+	const onSubmit = async (data) => {
+		try {
+
+			setLoading(true);
+			await PetsService.cadastraPet({
+				...data,
+				owner_id: 1
+			});
+			reset();
+			queryClient.invalidateQueries({ queryKey: ['pets'] });
+			setLoading(false);
+			// console.log(localStorage.getItem('user_id'));
+			console.log(data);
+		} catch (e) {
+			setToastIsOpen(true);
+		}
 	};
 
 	const autoCompleteStyle = {
@@ -58,6 +85,11 @@ export default function FormCadastroPet() {
 					alignItems: 'center',
 				}}
 			>
+				<Snackbar open={toastIsOpen} autoHideDuration={10000} onClose={handleClose}>
+					<Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+						Login e/ou senha não estão correto(s)
+					</Alert>
+				</Snackbar>
 				<Avatar sx={{ m: 1, bgcolor: theme.palette.secondary.main }}>
 					<PetsIcon />
 				</Avatar>
@@ -143,7 +175,7 @@ export default function FormCadastroPet() {
 											helperText={errors.size?.message}
 										>
 											{porte.map((porte) => (
-												<MenuItem key={porte.valor} value={porte.nome}>
+												<MenuItem key={porte.valor} value={porte.valor}>
 													{porte.nome}
 												</MenuItem>
 											))}
@@ -152,8 +184,38 @@ export default function FormCadastroPet() {
 								/>
 								{errors.size && <AlertaErroForm textoErro="Campo obrigatório" />}
 							</Grid>
+							<Grid item xs={12} sm={12} md={12} lg={12}>
+								<Controller
+									rules={{ required: true }}
+									control={control}
+									name="type"
+									render={({ field }) => (
+										<RadioGroup {...field} sx={{ flexFlow: 'wrap', justifyContent: 'space-evenly' }}>
+											<FormControlLabel
+												value="dog"
+												control={<Radio />}
+												label="Cachorro"
+											/>
+											<FormControlLabel
+												value="Cat"
+												control={<Radio />}
+												label="Gato"
+											/>
+										</RadioGroup>
+									)}
+								/>
+							</Grid>
 							<Grid item xs={12} sm={12} md={12} lg={12} textAlign="center">
-								<StyledLoadingButton onClick={handleSubmit(onSubmit)}>
+								<StyledLoadingButton
+									onClick={handleSubmit(onSubmit)}
+									loading={loading}
+									loadingPosition="end"
+									disabled={!isDirty || !isValid}
+									fullWidth
+									variant="contained"
+									sx={{ mt: 3, mb: 2, color: theme.palette.primary.dark }}
+									endIcon={<AddCircleIcon />}
+								>
 									Cadastrar
 								</StyledLoadingButton>
 							</Grid>

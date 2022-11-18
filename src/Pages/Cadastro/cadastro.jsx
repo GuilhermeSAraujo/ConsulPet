@@ -23,7 +23,7 @@ export default function Cadastro() {
 	const theme = useTheme();
 
 	const [loading, setLoading] = React.useState(false);
-	const [toastIsOpen, setToastIsOpen] = React.useState(false);
+	const [toastIsOpen, setToastIsOpen] = React.useState({ mensagem: "", isOpen: false, severity: '' });
 
 	const handleClose = (event, reason) => {
 		if (reason === 'clickaway') {
@@ -61,10 +61,11 @@ export default function Cadastro() {
 				password: data.senha,
 			};
 			await CadastroService.cadastraCliente(registerData);
+			setToastIsOpen({ mensagem: 'Sucesso! Sua conta foi cadastrada.', isOpen: true, severity: 'success' });
 			setLoading(false);
 		} catch (e) {
 			setLoading(false);
-			setToastIsOpen(true);
+			setToastIsOpen({ mensagem: 'Erro! Ocorreu um erro interno.', isOpen: true, severity: 'error' });
 		}
 	};
 
@@ -89,9 +90,9 @@ export default function Cadastro() {
 					alignItems: 'center',
 				}}
 			>
-				<Snackbar open={toastIsOpen} autoHideDuration={10000} onClose={handleClose}>
-					<Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-						Falha no cadastro do usuário. Tente novamente em alguns minutos.
+				<Snackbar open={toastIsOpen.isOpen} autoHideDuration={10000} onClose={handleClose}>
+					<Alert onClose={handleClose} severity="" sx={{ width: '100%' }}>
+						{toastIsOpen.mensagem}
 					</Alert>
 				</Snackbar>
 			</Box>

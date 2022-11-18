@@ -19,41 +19,13 @@ import { useQuery } from 'react-query';
 
 const DisplayVeterinarios = () => {
 	const theme = useTheme();
-	const veterinarios = [
-		{
-			id: 1,
-			crm: '10887',
-			specialization: 'Castração',
-			user: {
-				id: 1,
-				name: 'Eliabner Teixeira',
-				document: '151.968.326-02',
-				email: 'iamelitm@mail.com',
-				phone: '(31) 99746-7665',
-				pets: [],
-			},
-		},
-		{
-			id: 1,
-			crm: '10887',
-			specialization: 'Castração',
-			user: {
-				id: 1,
-				name: 'Eliabner Teixeira',
-				document: '151.968.326-02',
-				email: 'iamelitm@mail.com',
-				phone: '(31) 99746-7665',
-				pets: [],
-			},
-		},
-	];
 
 	const { data: vets } = useQuery(
 		'vets',
 		async () => await CadastroVeterinarioService.buscarVeterinarios(),
 		{ cacheTime: 600000, staleTime: 600000 }
 	);
-	console.log(vets);
+
 	return (
 		<Container component="main" maxWidth="xs" bc={theme.palette.primary.main}>
 			<CssBaseline />
