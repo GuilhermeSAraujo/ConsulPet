@@ -18,12 +18,13 @@ import CadastroService from './service/cadastroService';
 import AlertaErroForm from '../../shared/components/erroForm';
 import Copyright from '../../shared/components/copyright';
 import { cpfMask, phoneMask } from '../../utils/maskUtil';
+import { useNavigate } from 'react-router-dom'
 
 export default function Cadastro() {
 	const theme = useTheme();
-
+	const history = useNavigate();
 	const [loading, setLoading] = React.useState(false);
-	const [toastIsOpen, setToastIsOpen] = React.useState({ mensagem: "", isOpen: false, severity: '' });
+	const [toastIsOpen, setToastIsOpen] = React.useState({ mensagem: "", isOpen: false, severity: 'success' });
 
 	const handleClose = (event, reason) => {
 		if (reason === 'clickaway') {
@@ -61,8 +62,9 @@ export default function Cadastro() {
 				password: data.senha,
 			};
 			await CadastroService.cadastraCliente(registerData);
-			setToastIsOpen({ mensagem: 'Sucesso! Sua conta foi cadastrada.', isOpen: true, severity: 'success' });
+			setToastIsOpen({ mensagem: 'Sucesso! Sua conta foi cadastrada. Você será redirecionado para o login.', isOpen: true, severity: 'success' });
 			setLoading(false);
+			setTimeout(() => history('/login'), 2000)
 		} catch (e) {
 			setLoading(false);
 			setToastIsOpen({ mensagem: 'Erro! Ocorreu um erro interno.', isOpen: true, severity: 'error' });
@@ -91,7 +93,7 @@ export default function Cadastro() {
 				}}
 			>
 				<Snackbar open={toastIsOpen.isOpen} autoHideDuration={10000} onClose={handleClose}>
-					<Alert onClose={handleClose} severity="" sx={{ width: '100%' }}>
+					<Alert onClose={handleClose} severity={toastIsOpen.severity} sx={{ width: '100%' }}>
 						{toastIsOpen.mensagem}
 					</Alert>
 				</Snackbar>
