@@ -19,7 +19,7 @@ class UsersRepository {
 		});
 	}
 	async buscaUsuario(userId) {
-		return await fetch(`https://httpelitm.dev/api/auth/user/${userId}`, {
+		return await fetch(`https://httpelitm.dev/api/auth/user/${localStorage.getItem('user_id')}`, {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',

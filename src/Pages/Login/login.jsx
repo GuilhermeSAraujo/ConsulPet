@@ -53,7 +53,7 @@ function Login() {
 			setLoading(true);
 			const retorno = await LoginService.verificaCredenciais(data);
 			localStorage.setItem('sessionToken', retorno.token.access_token);
-			localStorage.set('user_id', retorno.user_id);
+			localStorage.setItem('user_id', retorno.user.id);
 			setLoading(false);
 			navigate('/home');
 		} catch (e) {
