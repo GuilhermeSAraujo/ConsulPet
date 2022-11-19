@@ -7,12 +7,11 @@ import {
 	Typography,
 	Avatar,
 } from '@mui/material';
-import FavoriteIcon from '@mui/icons-material/Favorite';
 import HealthAndSafetyIcon from '@mui/icons-material/HealthAndSafety';
-import { useEffect } from 'react';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import MedicalInformationIcon from '@mui/icons-material/MedicalInformation';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
+import HealingIcon from '@mui/icons-material/Healing';
 import EmailIcon from '@mui/icons-material/Email';
 import CadastroVeterinarioService from '../service/cadastroVeterinarioService';
 import { useQuery } from 'react-query';
@@ -58,7 +57,7 @@ const DisplayVeterinarios = () => {
 						backgroundColor: theme.palette.primary.light,
 						borderRadius: '3%',
 						border: '1px solid white',
-						minWidth: '280px',
+						minWidth: '350px',
 					}}
 				>
 					{vets &&
@@ -83,7 +82,14 @@ const DisplayVeterinarios = () => {
 								<Box sx={{ display: 'flex', justifyContent: 'center' }} mt={1} mb={1}>
 									<MedicalInformationIcon />
 									<Typography ml={1} variant="body1">
-										{vet.user.name}
+										{/* {vet.user.name} */}
+										Guilherme Souza Araújo
+									</Typography>
+								</Box>
+								<Box sx={{ display: 'flex', justifyContent: 'center' }} mb={1}>
+									<HealingIcon />
+									<Typography ml={1} variant="body1">
+										{vet.specialization}
 									</Typography>
 								</Box>
 								<Box sx={{ display: 'flex', justifyContent: 'center' }} mb={1}>
@@ -95,13 +101,15 @@ const DisplayVeterinarios = () => {
 								<Box sx={{ display: 'flex', justifyContent: 'center' }} mb={1}>
 									<LocalPhoneIcon />
 									<Typography ml={1} variant="body1">
-										{vet.user.phone}
+										{/* {vet.user.phone} */}
+										(31) 99977-7723
 									</Typography>
 								</Box>
-								<Box sx={{ display: 'flex', justifyContent: 'center' }} mb={1}>
+								<Box sx={{ display: 'flex', justifyContent: 'center' }} >
 									<EmailIcon />
 									<Typography ml={1} variant="body1">
-										{vet.user.email}
+										{/* {vet.user.email} */}
+										guilhermesouzae21@gmail.com
 									</Typography>
 								</Box>
 							</Grid>
