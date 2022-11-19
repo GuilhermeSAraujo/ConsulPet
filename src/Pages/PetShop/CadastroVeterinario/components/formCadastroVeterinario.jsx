@@ -58,7 +58,6 @@ export default function FormCadastroVeterinario() {
 			setLoading(false);
 		} catch (e) {
 			setLoading(false);
-			console.log(e);
 		}
 	};
 

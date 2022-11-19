@@ -53,7 +53,6 @@ export default function FormCadastroPet() {
 
 	const queryClient = useQueryClient();
 	const onSubmit = async (data) => {
-		console.log("teste1234", { ...data, birth_date: dayjs(data.birth_date).format('YYYY-MM-DD') })
 		try {
 			setLoading(true);
 			await PetsService.cadastraPet({

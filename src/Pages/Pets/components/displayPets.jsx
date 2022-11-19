@@ -24,7 +24,6 @@ const DisplayPets = () => {
 		async () => await PetsService.buscaPets(1),
 		{ cacheTime: 600000, staleTime: 600000 }
 	);
-	console.log("🚀 ~ file: displayPets.jsx ~ line 21 ~ DisplayPets ~ pets", pets)
 
 	return (
 		<Container component="main" maxWidth="xs" bc={theme.palette.primary.main}>

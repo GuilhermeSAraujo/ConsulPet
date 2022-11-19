@@ -4,7 +4,6 @@ class CadastroService {
 	async cadastraCliente(data) {
 		return await CadastroRepository.cadastraCliente(data).then(
 			async (response) => {
-				console.log(response);
 				if (response.ok) {
 					return await response.json();
 				} else {
