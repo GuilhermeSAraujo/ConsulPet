@@ -18,13 +18,17 @@ import CadastroService from './service/cadastroService';
 import AlertaErroForm from '../../shared/components/erroForm';
 import Copyright from '../../shared/components/copyright';
 import { cpfMask, phoneMask } from '../../utils/maskUtil';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 
 export default function Cadastro() {
 	const theme = useTheme();
 	const history = useNavigate();
 	const [loading, setLoading] = React.useState(false);
-	const [toastIsOpen, setToastIsOpen] = React.useState({ mensagem: "", isOpen: false, severity: 'success' });
+	const [toastIsOpen, setToastIsOpen] = React.useState({
+		mensagem: '',
+		isOpen: false,
+		severity: 'success',
+	});
 
 	const handleClose = (event, reason) => {
 		if (reason === 'clickaway') {
@@ -62,12 +66,21 @@ export default function Cadastro() {
 				password: data.senha,
 			};
 			await CadastroService.cadastraCliente(registerData);
-			setToastIsOpen({ mensagem: 'Sucesso! Sua conta foi cadastrada. Você será redirecionado para o login.', isOpen: true, severity: 'success' });
+			setToastIsOpen({
+				mensagem:
+					'Sucesso! Sua conta foi cadastrada. Você será redirecionado para o login.',
+				isOpen: true,
+				severity: 'success',
+			});
 			setLoading(false);
-			setTimeout(() => history('/consulpet/#/login'), 2000)
+			setTimeout(() => history('/login'), 2000);
 		} catch (e) {
 			setLoading(false);
-			setToastIsOpen({ mensagem: 'Erro! Ocorreu um erro interno.', isOpen: true, severity: 'error' });
+			setToastIsOpen({
+				mensagem: 'Erro! Ocorreu um erro interno.',
+				isOpen: true,
+				severity: 'error',
+			});
 		}
 	};
 
@@ -92,8 +105,16 @@ export default function Cadastro() {
 					alignItems: 'center',
 				}}
 			>
-				<Snackbar open={toastIsOpen.isOpen} autoHideDuration={10000} onClose={handleClose}>
-					<Alert onClose={handleClose} severity={toastIsOpen.severity} sx={{ width: '100%' }}>
+				<Snackbar
+					open={toastIsOpen.isOpen}
+					autoHideDuration={10000}
+					onClose={handleClose}
+				>
+					<Alert
+						onClose={handleClose}
+						severity={toastIsOpen.severity}
+						sx={{ width: '100%' }}
+					>
 						{toastIsOpen.mensagem}
 					</Alert>
 				</Snackbar>
@@ -266,7 +287,7 @@ export default function Cadastro() {
 					</LoadingButton>
 					<Grid container justifyContent="flex-end">
 						<Grid item>
-							<Link href="/" variant="body2">
+							<Link href="/login" variant="body2">
 								Já possui uma conta? Entre aqui.
 							</Link>
 						</Grid>
