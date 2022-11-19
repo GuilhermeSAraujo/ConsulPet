@@ -33,10 +33,17 @@ const servico = [
 		valor: 3,
 	},
 ];
+
 const encontraServico = (valor, nome) => {
 	if (valor) return servico.find((p) => p.valor === valor);
 	if (nome) return servico.find((p) => p.nome === nome);
 	return null;
 };
 
-export { porte, encontraPorte, servico, encontraServico };
+const tamanhos = {
+	small: "Pequeno",
+	medium: "Médio",
+	large: "Grande"
+}
+
+export { porte, encontraPorte, servico, encontraServico, tamanhos };

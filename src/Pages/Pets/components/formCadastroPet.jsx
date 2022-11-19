@@ -32,7 +32,7 @@ import dayjs from 'dayjs';
 export default function FormCadastroPet() {
 	const theme = useTheme();
 	const [loading, setLoading] = useState(false);
-	const [toastIsOpen, setToastIsOpen] = useState(false);
+	const [toastIsOpen, setToastIsOpen] = useState({ mensagem: "", isOpen: false, severity: 'success' });
 
 	const {
 		handleSubmit,
@@ -40,7 +40,7 @@ export default function FormCadastroPet() {
 		reset,
 		formState: { errors, isDirty, isValid },
 	} = useForm({
-		defaultValues: { name: '', birth_date: '01/01/2022', size: '', type: '' },
+		defaultValues: { name: '', birth_date: '01/01/2022', size: '' },
 		mode: 'onChange',
 	});
 
@@ -53,20 +53,21 @@ export default function FormCadastroPet() {
 
 	const queryClient = useQueryClient();
 	const onSubmit = async (data) => {
+		console.log("teste1234", { ...data, birth_date: dayjs(data.birth_date).format('YYYY-MM-DD') })
 		try {
-
 			setLoading(true);
 			await PetsService.cadastraPet({
 				...data,
-				owner_id: 1
+				birth_date: dayjs(data.birth_date).format('YYYY-MM-DD'),
+				owner_id: localStorage.getItem('user_id')
 			});
 			reset();
 			queryClient.invalidateQueries({ queryKey: ['pets'] });
+			setToastIsOpen({ mensagem: 'Sucesso! Seu pet foi cadastrado.', isOpen: true, severity: 'success' });
 			setLoading(false);
-			// console.log(localStorage.getItem('user_id'));
-			console.log(data);
 		} catch (e) {
-			setToastIsOpen(true);
+			setToastIsOpen({ mensagem: 'Erro! Ocorreu um erro interno.', isOpen: true, severity: 'error' });
+			setLoading(false);
 		}
 	};
 
@@ -85,9 +86,9 @@ export default function FormCadastroPet() {
 					alignItems: 'center',
 				}}
 			>
-				<Snackbar open={toastIsOpen} autoHideDuration={10000} onClose={handleClose}>
-					<Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-						Login e/ou senha não estão correto(s)
+				<Snackbar open={toastIsOpen.isOpen} autoHideDuration={10000} onClose={handleClose}>
+					<Alert onClose={handleClose} severity={toastIsOpen.severity} sx={{ width: '100%' }}>
+						{toastIsOpen.mensagem}
 					</Alert>
 				</Snackbar>
 				<Avatar sx={{ m: 1, bgcolor: theme.palette.secondary.main }}>
@@ -183,27 +184,6 @@ export default function FormCadastroPet() {
 									)}
 								/>
 								{errors.size && <AlertaErroForm textoErro="Campo obrigatório" />}
-							</Grid>
-							<Grid item xs={12} sm={12} md={12} lg={12}>
-								<Controller
-									rules={{ required: true }}
-									control={control}
-									name="type"
-									render={({ field }) => (
-										<RadioGroup {...field} sx={{ flexFlow: 'wrap', justifyContent: 'space-evenly' }}>
-											<FormControlLabel
-												value="dog"
-												control={<Radio />}
-												label="Cachorro"
-											/>
-											<FormControlLabel
-												value="Cat"
-												control={<Radio />}
-												label="Gato"
-											/>
-										</RadioGroup>
-									)}
-								/>
 							</Grid>
 							<Grid item xs={12} sm={12} md={12} lg={12} textAlign="center">
 								<StyledLoadingButton

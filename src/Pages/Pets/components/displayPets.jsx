@@ -13,6 +13,8 @@ import CakeIcon from '@mui/icons-material/Cake';
 import StraightenIcon from '@mui/icons-material/Straighten';
 import { useQuery } from 'react-query';
 import PetsService from '../service/petsService';
+import dayjs from 'dayjs';
+import { tamanhos } from '../../../utils/enum/selectEnum';
 
 const DisplayPets = () => {
 	const theme = useTheme();
@@ -44,19 +46,18 @@ const DisplayPets = () => {
 			</Box>
 			<Grid
 				container
-				gap={1}
 				sx={{
 					placeContent: 'center',
 				}}
 			>
 				<Box
-					padding={1}
+					padding={0.5}
 					sx={{
 						mt: 1,
 						backgroundColor: theme.palette.primary.light,
 						borderRadius: '3%',
 						border: '1px solid white',
-						minWidth: '280px',
+						minWidth: { xs: '280px', md: '320px' },
 						display: 'flex',
 						flexWrap: 'wrap',
 						justifyContent: 'space-evenly',
@@ -67,19 +68,17 @@ const DisplayPets = () => {
 						<Grid
 							item
 							key={i}
-							xs={12}
-							sm={12}
-							md={5}
-							lg={5}
+							xs={8}
+							sm={8}
+							md={5.5}
+							lg={5.5}
 							sx={{
 								textAlign: 'center',
 								border: '1px solid white',
 								borderRadius: '16px',
 								padding: 1,
-								// '&.MuiGrid-root + &.MuiGrid-root': { marginBottom: 2 },
 								'&.MuiGrid-root': { marginBottom: 1 },
-								// marginBottom: 1,
-								maxHeight: '110px',
+								maxHeight: '200px',
 							}}
 						>
 							<Box sx={{ display: 'flex', justifyContent: 'center', mt: 0.5 }}>
@@ -88,18 +87,18 @@ const DisplayPets = () => {
 									{pet.name}
 								</Typography>
 							</Box>
-							<Box sx={{ display: 'flex', justifyContent: 'center', mt: 0.5 }}>
-								<CakeIcon />
-								<Typography ml={0.5} variant="body1">
-									{pet.type}
-								</Typography>
-							</Box>
 							<Box
 								sx={{ display: 'flex', justifyContent: 'center', mt: 0.5, mb: 0.5 }}
 							>
 								<StraightenIcon />
 								<Typography ml={0.5} variant="body1">
-									{pet.size}
+									{tamanhos[pet.size]}
+								</Typography>
+							</Box>
+							<Box sx={{ display: 'flex', justifyContent: 'center', mt: 0.5 }}>
+								<CakeIcon />
+								<Typography ml={0.5} variant="body1">
+									{dayjs(pet.birth_date).format('DD/MM/YYYY')}
 								</Typography>
 							</Box>
 						</Grid>

@@ -11,11 +11,11 @@ class PetsService {
 			}
 		});
 	}
-	async buscaPets(userId) {
-		return await UsersRepository.buscaUsuario(userId).then(async (response) => {
+	async buscaPets() {
+		return await PetsRepository.buscaPets().then(async (response) => {
 			if (response.ok) {
 				const dados = await response.json();
-				return dados.data.pets;
+				return dados.data;
 			} else {
 				throw new Error('Erro ' + response);
 			}
