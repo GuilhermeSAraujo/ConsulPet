@@ -12,6 +12,7 @@ import {
 	InputAdornment,
 	MenuItem,
 	Tooltip,
+	Snackbar, Alert
 } from '@mui/material';
 import PetsIcon from '@mui/icons-material/Pets';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
@@ -26,7 +27,7 @@ import CadastroVeterinarioService from '../service/cadastroVeterinarioService';
 export default function FormCadastroVeterinario() {
 	const theme = useTheme();
 	const [loading, setLoading] = useState(false);
-	const [toastIsOpen, setToastIsOpen] = useState(false);
+	const [toastIsOpen, setToastIsOpen] = useState({ mensagem: "", isOpen: false, severity: 'success' });
 
 	const queryClient = useQueryClient();
 	const { data: users } = useQuery(
@@ -49,14 +50,23 @@ export default function FormCadastroVeterinario() {
 		WebkitBoxShadow: `0 0 0 1000px ${theme.palette.primary.light} inset`,
 	};
 
+	const handleClose = (event, reason) => {
+		if (reason === 'clickaway') {
+			return;
+		}
+		setToastIsOpen(false);
+	};
+
 	const onSubmit = async (data) => {
 		try {
 			setLoading(true);
 			await CadastroVeterinarioService.cadastraVeterinario(data);
 			queryClient.invalidateQueries({ queryKey: ['vets'] });
 			reset();
+			setToastIsOpen({ mensagem: 'Sucesso! O veterinário foi cadastrado.', isOpen: true, severity: 'success' });
 			setLoading(false);
 		} catch (e) {
+			setToastIsOpen({ mensagem: 'Erro! Ocorreu um erro interno.', isOpen: true, severity: 'error' });
 			setLoading(false);
 		}
 	};
@@ -72,6 +82,11 @@ export default function FormCadastroVeterinario() {
 					alignItems: 'center',
 				}}
 			>
+				<Snackbar open={toastIsOpen.isOpen} autoHideDuration={10000} onClose={handleClose}>
+					<Alert onClose={handleClose} severity={toastIsOpen.severity} sx={{ width: '100%' }}>
+						{toastIsOpen.mensagem}
+					</Alert>
+				</Snackbar>
 				<Avatar sx={{ m: 1, bgcolor: theme.palette.secondary.main }}>
 					<PetsIcon />
 				</Avatar>
