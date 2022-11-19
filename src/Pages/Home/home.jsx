@@ -1,301 +1,260 @@
-import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import {
 	Grid,
-	Box,
+	Avatar,
 	Typography,
-	FormControl,
-	Select,
-	MenuItem,
-	TextField,
-	Button,
-	Stack,
-	InputLabel,
-	InputAdornment,
-	FormControlLabel,
-	Checkbox,
-	FormGroup,
+	useTheme,
+	Container,
 	CssBaseline,
+	TextField,
+	Box,
+	Stack,
+	MenuItem,
+	Snackbar,
+	Alert,
+	FormControlLabel,
+	RadioGroup,
+	Radio
 } from '@mui/material';
-import PetsIcon from '@mui/icons-material/Pets';
-import RoomServiceIcon from '@mui/icons-material/RoomService';
-import dayjs from 'dayjs';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-import { useTheme } from '@mui/material/styles';
-import { encontraPorte, encontraServico } from '../../utils/enum/selectEnum';
+import { useState } from 'react';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import AlertaErroForm from '../../shared/components/erroForm';
+import PetsIcon from '@mui/icons-material/Pets';
+import LoyaltyIcon from '@mui/icons-material/Loyalty';
+import StyledLoadingButton from '../../utils/components/LoadingButton';
+import { porte } from '../../utils/enum/selectEnum';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import TodayIcon from '@mui/icons-material/Today';
+import { useForm, Controller } from 'react-hook-form';
+import { useQuery, useQueries, useQueryClient } from 'react-query';
+import AgendamentoService from './service/AgendamentoService';
+import dayjs from 'dayjs';
 
 function Home() {
-	const [porte, setPorte] = useState('');
-	const [servico, setServico] = useState('');
-	const [pet, setPet] = useState('');
-	const [data, setData] = useState(dayjs());
-	const [banho, setBanho] = useState(false);
-	const [tosa, setTosa] = useState(false);
-	const [desembaracamento, setDesembaracamento] = useState(false);
-	const [corteUnhas, setCorteUnhas] = useState(false);
-	const [hidratacao, setHidratacao] = useState(false);
-	const [consulta, setConsulta] = useState(false);
-	const [vacinacao, setVacinacao] = useState(false);
-	const [passeio, setPasseio] = useState(false);
-	const [adestramento, setAdestramento] = useState(false);
-
 	const theme = useTheme();
-	const { state } = useLocation();
+	const [loading, setLoading] = useState(false);
+	const [toastIsOpen, setToastIsOpen] = useState({ mensagem: "", isOpen: false, severity: 'success' });
 
-	const onSubmit = (dados) => console.log(dados);
+	const { data: pets } = useQuery(
+		'pets',
+		async () => await AgendamentoService.buscaPets(),
+		{ cacheTime: 600000, staleTime: 600000, onSuccess: () => setLoading(false) }
+	);
 
-	const handlePorte = (e) => {
-		setPorte(e.target.value);
-	};
+	const { data: vets } = useQuery(
+		'vets',
+		async () => await AgendamentoService.buscaVeterinarios(),
+		{ cacheTime: 600000, staleTime: 600000, onSuccess: () => setLoading(false) }
+	);
 
-	const handleServico = (e) => {
-		setServico(e.target.value);
-	};
-	const handleData = (newValue) => {
-		if (newValue !== undefined) {
-			setData(newValue);
+	// const results = useQueries({
+	// 	queries: [
+	// 		{ queryKey: ['petsHome', 1], queryFn: () => AgendamentoService.buscaPets() },
+	// 		{ queryKey: ['vetsHome', 2], queryFn: () => AgendamentoService.buscaVeterinarios() }
+	// 	]
+	// })
+
+	const {
+		handleSubmit,
+		control,
+		reset,
+		formState: { errors, isDirty, isValid },
+	} = useForm({
+		defaultValues: { date: new Date(), pet_id: '', vet_id: '', type: '' },
+		mode: 'onChange',
+	});
+
+	const handleClose = (event, reason) => {
+		if (reason === 'clickaway') {
+			return;
 		}
+		setToastIsOpen(false);
 	};
 
-	const handlePet = (e) => {
-		setPet(e.target.value);
+	const onSubmit = async (data) => {
+		console.log(data);
+		// "01-01-2025 12:00"
+		console.log({ ...data, date: dayjs(data.date).format("DD-MM-YYYY HH:mm") })
+		// try {
+		// 	setLoading(true);
+		// 	await PetsService.cadastraPet({
+		// 		...data,
+		// 		birth_date: dayjs(data.birth_date).format('YYYY-MM-DD'),
+		// 		owner_id: localStorage.getItem('user_id')
+		// 	});
+		// 	reset();
+		// 	queryClient.invalidateQueries({ queryKey: ['pets'] });
+		// 	setToastIsOpen({ mensagem: 'Sucesso! Seu pet foi cadastrado.', isOpen: true, severity: 'success' });
+		// 	setLoading(false);
+		// } catch (e) {
+		// 	setToastIsOpen({ mensagem: 'Erro! Ocorreu um erro interno.', isOpen: true, severity: 'error' });
+		// 	setLoading(false);
+		// }
+	};
+
+	const autoCompleteStyle = {
+		WebkitBoxShadow: `0 0 0 1000px ${theme.palette.primary.light} inset`,
 	};
 
 	return (
-		<Grid
-			container
-			margin={0}
-			padding={0}
-			sx={{
-				width: '100%',
-				justifyContent: 'center',
-			}}
-		>
+		<Container component="main" maxWidth="xs" bc={theme.palette.primary.main}>
 			<CssBaseline />
-			<Grid
-				item
-				sm={12}
-				md={7}
-				lg={7}
+			<Box
 				sx={{
-					marginTop: '8vh',
-					textAlign: 'center',
+					marginTop: 4,
+					display: 'flex',
+					flexDirection: 'column',
+					alignItems: 'center',
 				}}
 			>
+				<Snackbar open={toastIsOpen.isOpen} autoHideDuration={10000} onClose={handleClose}>
+					<Alert onClose={handleClose} severity={toastIsOpen.severity} sx={{ width: '100%' }}>
+						{toastIsOpen.mensagem}
+					</Alert>
+				</Snackbar>
+				<Avatar sx={{ m: 1, bgcolor: theme.palette.secondary.main }}>
+					<TodayIcon />
+				</Avatar>
+				<Typography component="h1" variant="h5">
+					Criar agendamento
+				</Typography>
+			</Box>
+			<Grid container sx={{ placeContent: 'center' }}>
 				<Box
+					padding={2}
 					sx={{
+						mt: 1,
 						backgroundColor: theme.palette.primary.light,
-						paddingTop: '20px',
-						paddingBottom: '25px',
-						borderRadius: '10%',
-						paddingRight: '15%',
-						paddingLeft: '15%',
-						boxShadow: '0px 6px 23px 9px rgba(59,44,202,0.3)',
+						borderRadius: '3%',
+						border: '1px solid white',
+						maxWidth: '280px',
 					}}
 				>
-					<Typography
-						variant="h5"
-						fontWeight={500}
-						sx={{ marginBottom: '1.5rem', letterSpacing: '2px', color: 'white' }}
-					>
-						Agende seu horário
-					</Typography>
-					<Stack spacing={3}>
-						<FormControl>
-							<InputLabel id="labelPet">Escolha seu pet</InputLabel>
-							<Select
-								value={pet}
-								label="Escolha seu pet"
-								labelId="labelPet"
-								onChange={handlePet}
-								sx={{ textAlign: 'left' }}
-							>
-								<MenuItem value="Capitu">Capitu</MenuItem>
-							</Select>
-						</FormControl>
-						<FormControl>
-							<DateTimePicker
-								label="Data e hora"
-								value={data}
-								onChange={handleData}
-								renderInput={(params) => <TextField {...params} />}
-							/>
-						</FormControl>
-						<FormControl>
-							<InputLabel id="labelPorte">Porte</InputLabel>
-							<Select
-								value={porte}
-								label="Porte"
-								labelId="labelPorte"
-								onChange={handlePorte}
-								sx={{ textAlign: 'left' }}
-								endAdornment={
-									<InputAdornment
-										position="end"
-										sx={{
-											marginRight: '1rem',
+					{loading ? <h1>Carregado...</h1> : (<form id="cadastroPet">
+						<Stack spacing={2}>
+							<Grid item xs={12} sm={12} md={12} lg={12}>
+								{pets && pets.length > 0 ? (
+									<Controller
+										name="pet_id"
+										control={control}
+										rules={{
+											required: true,
 										}}
-									>
-										<PetsIcon />
-									</InputAdornment>
-								}
-							>
-								<MenuItem value={encontraPorte(1)}>{encontraPorte(1).nome}</MenuItem>
-								<MenuItem value={encontraPorte(2)}>{encontraPorte(2).nome}</MenuItem>
-								<MenuItem value={encontraPorte(3)}>{encontraPorte(3).nome}</MenuItem>
-							</Select>
-						</FormControl>
-						<FormControl>
-							<InputLabel id="labelServico">Serviço</InputLabel>
-							<Select
-								value={servico}
-								label="Serviço"
-								labelId="labelServico"
-								onChange={handleServico}
-								sx={{ textAlign: 'left' }}
-								endAdornment={
-									<InputAdornment
-										position="end"
-										sx={{
-											marginRight: '1rem',
+										render={({ field: { onChange, value } }) => (
+											<TextField
+												select
+												fullWidth
+												label="Pet"
+												value={value}
+												onChange={onChange}
+												error={errors.pet_id}
+												helperText={errors.pet_id?.message}
+											>
+												{pets.map((pet) => (
+													<MenuItem key={pet.id} value={pet.id}>
+														{pet.name}
+													</MenuItem>
+												))}
+											</TextField>
+										)}
+									/>
+								) : (
+									<></>
+								)}
+								{errors.user_id && <AlertaErroForm textoErro="Campo obrigatório" />}
+							</Grid>
+							<Grid item xs={12} sm={12} md={12} lg={12}>
+								<Controller
+									name="date"
+									control={control}
+									rules={{
+										required: true,
+									}}
+									render={({ field: { onChange, value } }) => (
+										<DateTimePicker
+											label="Data e hora"
+											ampm={false}
+											value={value}
+											inputFormat="DD/MM/YYYY HH:mm"
+											onChange={onChange}
+											renderInput={(params) => <TextField {...params} />}
+										/>
+									)}
+								/>
+								{errors.date && <AlertaErroForm textoErro="Campo obrigatório" />}
+							</Grid>
+							<Grid item xs={12} sm={12} md={12} lg={12}>
+								{vets && vets.length > 0 ? (
+									<Controller
+										name="vet_id"
+										control={control}
+										rules={{
+											required: true,
 										}}
-									>
-										<RoomServiceIcon />
-									</InputAdornment>
-								}
-							>
-								<MenuItem value={encontraServico(2)}>
-									{encontraServico(2).nome}
-								</MenuItem>
-								<MenuItem value={encontraServico(1)}>
-									{encontraServico(1).nome}
-								</MenuItem>
-								<MenuItem value={encontraServico(3)}>
-									{encontraServico(3).nome}
-								</MenuItem>
-							</Select>
-						</FormControl>
-						<FormGroup
-							sx={{
-								display: 'table-row-group',
-							}}
-						>
-							<FormControlLabel
-								sx={{ display: servico.valor !== 2 ? 'none' : '' }}
-								control={
-									<Checkbox
-										disabled={servico.valor !== 2}
-										value={banho}
-										onClick={() => setBanho(!banho)}
+										render={({ field: { onChange, value } }) => (
+											<TextField
+												select
+												fullWidth
+												label="Veterinário"
+												value={value}
+												onChange={onChange}
+												error={errors.vet_id}
+												helperText={errors.vet_id?.message}
+											>
+												{vets.map((vet) => (
+													<MenuItem key={vet.id} value={vet.id}>
+														{vet.crm}
+													</MenuItem>
+												))}
+											</TextField>
+										)}
 									/>
-								}
-								label="Banho"
-							/>
-							<FormControlLabel
-								sx={{ display: servico.valor !== 2 ? 'none' : '' }}
-								control={
-									<Checkbox
-										disabled={servico.valor !== 2}
-										value={tosa}
-										onClick={() => setTosa(!tosa)}
-									/>
-								}
-								label="Tosa"
-							/>
-							<FormControlLabel
-								sx={{ display: servico.valor !== 2 ? 'none' : '' }}
-								control={
-									<Checkbox
-										disabled={servico.valor !== 2}
-										value={desembaracamento}
-										onClick={() => setDesembaracamento(!desembaracamento)}
-									/>
-								}
-								label="Desembaraçamento"
-							/>
-							<FormControlLabel
-								sx={{ display: servico.valor !== 2 ? 'none' : '' }}
-								control={
-									<Checkbox
-										disabled={servico.valor !== 2}
-										value={corteUnhas}
-										onClick={() => setCorteUnhas(!corteUnhas)}
-									/>
-								}
-								label="Corte de unhas"
-							/>
-							<FormControlLabel
-								sx={{ display: servico.valor !== 2 ? 'none' : '' }}
-								control={
-									<Checkbox
-										disabled={servico.valor !== 2}
-										value={hidratacao}
-										onClick={() => setHidratacao(!hidratacao)}
-									/>
-								}
-								label="Hidratação"
-							/>
-							<FormControlLabel
-								sx={{ display: servico.valor !== 1 ? 'none' : '' }}
-								control={
-									<Checkbox
-										disabled={servico.valor !== 1}
-										value={consulta}
-										onClick={() => setConsulta(!consulta)}
-									/>
-								}
-								label="Consulta"
-							/>
-							<FormControlLabel
-								sx={{ display: servico.valor !== 1 ? 'none' : '' }}
-								control={
-									<Checkbox
-										disabled={servico.valor !== 1}
-										value={vacinacao}
-										onClick={() => setVacinacao(!vacinacao)}
-									/>
-								}
-								label="Vacinação"
-							/>
-							<FormControlLabel
-								sx={{ display: servico.valor !== 3 ? 'none' : '' }}
-								control={
-									<Checkbox
-										disabled={servico.valor !== 3}
-										value={passeio}
-										onClick={() => setPasseio(!passeio)}
-									/>
-								}
-								label="Passeio"
-							/>
-							<FormControlLabel
-								sx={{ display: servico.valor !== 3 ? 'none' : '' }}
-								control={
-									<Checkbox
-										disabled={servico.valor !== 3}
-										value={adestramento}
-										onClick={() => setAdestramento(!adestramento)}
-									/>
-								}
-								label="Adestramento"
-							/>
-						</FormGroup>
-						<Button
-							color="primary"
-							onClick={onSubmit}
-							sx={{
-								marginTop: '15px',
-								borderRadius: '10%',
-								color: 'darkblue',
-								backgroundColor: '#c4e3cd',
-							}}
-						>
-							Enviar
-						</Button>
-					</Stack>
+								) : (
+									<></>
+								)}
+								{errors.user_id && <AlertaErroForm textoErro="Campo obrigatório" />}
+							</Grid>
+							<Grid item xs={12} sm={12} md={12} lg={12}>
+								<Controller
+									rules={{ required: true }}
+									control={control}
+									name="type"
+									render={({ field }) => (
+										<RadioGroup {...field}>
+											<FormControlLabel
+												value="clinic"
+												control={<Radio />}
+												label="Consulta veterinária"
+											/>
+											<FormControlLabel
+												value="bath"
+												control={<Radio />}
+												label="Banho/Tosa"
+											/>
+										</RadioGroup>
+									)}
+								/>
+							</Grid>
+							<Grid item xs={12} sm={12} md={12} lg={12} textAlign="center">
+								<StyledLoadingButton
+									onClick={handleSubmit(onSubmit)}
+									loading={loading}
+									loadingPosition="end"
+									disabled={!isDirty || !isValid}
+									fullWidth
+									variant="contained"
+									sx={{ mt: 3, mb: 2, color: theme.palette.primary.dark }}
+									endIcon={<AddCircleIcon />}
+								>
+									Agendar
+								</StyledLoadingButton>
+							</Grid>
+						</Stack>
+					</form>)}
+
 				</Box>
 			</Grid>
-		</Grid>
+		</Container>
 	);
 }
 
