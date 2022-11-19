@@ -1,5 +1,5 @@
 class UsersRepository {
-	async listaUsuarios(data) {
+	async listaUsuarios() {
 		return await fetch('https://httpelitm.dev/api/auth/user', {
 			method: 'GET',
 			headers: {
@@ -8,7 +8,7 @@ class UsersRepository {
 			},
 		});
 	}
-	async listaVeterinarios(data) {
+	async listaVeterinarios() {
 		return await fetch('https://httpelitm.dev/api/auth/vet', {
 			method: 'GET',
 			headers: {

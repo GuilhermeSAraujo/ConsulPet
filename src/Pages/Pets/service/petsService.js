@@ -1,5 +1,4 @@
 import PetsRepository from '../../../Repositories/petsRepository';
-import UsersRepository from '../../../Repositories/usersRepository';
 
 class PetsService {
 	async cadastraPet(data) {
