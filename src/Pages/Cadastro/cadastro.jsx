@@ -73,7 +73,7 @@ export default function Cadastro() {
 				severity: 'success',
 			});
 			setLoading(false);
-			setTimeout(() => history('/consulpet/'), 2000);
+			setTimeout(() => history('/login'), 2000);
 		} catch (e) {
 			setLoading(false);
 			setToastIsOpen({
