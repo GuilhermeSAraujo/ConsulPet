@@ -73,7 +73,7 @@ export default function Cadastro() {
 				severity: 'success',
 			});
 			setLoading(false);
-			setTimeout(() => history('/login'), 2000);
+			setTimeout(() => history('/consulpet/'), 2000);
 		} catch (e) {
 			setLoading(false);
 			setToastIsOpen({
@@ -287,9 +287,9 @@ export default function Cadastro() {
 					</LoadingButton>
 					<Grid container justifyContent="flex-end">
 						<Grid item>
-							<Link href="/login" variant="body2">
+							<Typography onClick={() => history('/login')} variant="body2" sx={{ textDecoration: 'underline', cursor: 'pointer' }}>
 								Já possui uma conta? Entre aqui.
-							</Link>
+							</Typography>
 						</Grid>
 					</Grid>
 				</Box>
