@@ -64,7 +64,7 @@ export default function Cadastro() {
 			await CadastroService.cadastraCliente(registerData);
 			setToastIsOpen({ mensagem: 'Sucesso! Sua conta foi cadastrada. Você será redirecionado para o login.', isOpen: true, severity: 'success' });
 			setLoading(false);
-			setTimeout(() => history('/login'), 2000)
+			setTimeout(() => history('/'), 2000)
 		} catch (e) {
 			setLoading(false);
 			setToastIsOpen({ mensagem: 'Erro! Ocorreu um erro interno.', isOpen: true, severity: 'error' });
