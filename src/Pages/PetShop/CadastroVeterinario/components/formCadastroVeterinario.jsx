@@ -61,7 +61,7 @@ export default function FormCadastroVeterinario() {
 		try {
 			setLoading(true);
 			await CadastroVeterinarioService.cadastraVeterinario(data);
-			queryClient.invalidateQueries({ queryKey: ['vets'] });
+			queryClient.invalidateQueries({ queryKey: ['vetsCadastro'] });
 			reset();
 			setToastIsOpen({ mensagem: 'Sucesso! O veterinário foi cadastrado.', isOpen: true, severity: 'success' });
 			setLoading(false);

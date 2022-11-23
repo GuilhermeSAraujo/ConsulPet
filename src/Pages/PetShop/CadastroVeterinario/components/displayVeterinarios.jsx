@@ -20,7 +20,7 @@ const DisplayVeterinarios = () => {
 	const theme = useTheme();
 
 	const { data: vets } = useQuery(
-		'vets',
+		'vetsCadastro',
 		async () => await CadastroVeterinarioService.buscarVeterinarios(),
 		{ cacheTime: 600000, staleTime: 600000 }
 	);
@@ -82,8 +82,7 @@ const DisplayVeterinarios = () => {
 								<Box sx={{ display: 'flex', justifyContent: 'center' }} mt={1} mb={1}>
 									<MedicalInformationIcon />
 									<Typography ml={1} variant="body1">
-										{/* {vet.user.name} */}
-										Guilherme Souza Araújo
+										{vet.user_account_details.name}
 									</Typography>
 								</Box>
 								<Box sx={{ display: 'flex', justifyContent: 'center' }} mb={1}>
@@ -101,15 +100,15 @@ const DisplayVeterinarios = () => {
 								<Box sx={{ display: 'flex', justifyContent: 'center' }} mb={1}>
 									<LocalPhoneIcon />
 									<Typography ml={1} variant="body1">
-										{/* {vet.user.phone} */}
-										(31) 99977-7723
+										{vet.user_account_details.phone}
+
 									</Typography>
 								</Box>
 								<Box sx={{ display: 'flex', justifyContent: 'center' }} >
 									<EmailIcon />
 									<Typography ml={1} variant="body1">
-										{/* {vet.user.email} */}
-										guilhermesouzae21@gmail.com
+										{vet.user_account_details.email}
+
 									</Typography>
 								</Box>
 							</Grid>
