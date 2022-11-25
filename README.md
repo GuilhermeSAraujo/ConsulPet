@@ -2,4 +2,4 @@
 
 Projeto publicado em: [https://GuilhermeSAraujo.github.io/consulpet]
 
-### Atividade dda faculdade com objetivo de criar um produto digital.
+### Atividade da faculdade com objetivo de criar um produto digital.
