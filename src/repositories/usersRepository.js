@@ -18,13 +18,16 @@ class UsersRepository {
 		});
 	}
 	async buscaUsuario(userId) {
-		return await fetch(`https://httpelitm.dev/api/auth/user/${localStorage.getItem('user_id')}`, {
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('sessionToken')}`,
-			},
-		});
+		return await fetch(
+			`https://httpelitm.dev/api/auth/user/${localStorage.getItem('user_id')}`,
+			{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('sessionToken')}`,
+				},
+			}
+		);
 	}
 }
 export default new UsersRepository();

@@ -60,9 +60,7 @@ const DisplayVeterinarios = () => {
 						minWidth: '350px',
 					}}
 				>
-					{vets &&
-						vets.data &&
-						vets.data.length > 0 &&
+					{vets && vets.data && vets.data.length > 0 ? (
 						vets.data.map((vet, i) => (
 							<Grid
 								item
@@ -101,18 +99,21 @@ const DisplayVeterinarios = () => {
 									<LocalPhoneIcon />
 									<Typography ml={1} variant="body1">
 										{vet.user_account_details.phone}
-
 									</Typography>
 								</Box>
-								<Box sx={{ display: 'flex', justifyContent: 'center' }} >
+								<Box sx={{ display: 'flex', justifyContent: 'center' }}>
 									<EmailIcon />
 									<Typography ml={1} variant="body1">
 										{vet.user_account_details.email}
-
 									</Typography>
 								</Box>
 							</Grid>
-						))}
+						))
+					) : (
+						<Typography ml={0.5} variant="body1" textAlign="center">
+							Nenhum veterinário foi cadastrado
+						</Typography>
+					)}
 				</Box>
 			</Grid>
 		</Container>

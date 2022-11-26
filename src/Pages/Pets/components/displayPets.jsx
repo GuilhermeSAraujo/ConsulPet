@@ -63,47 +63,53 @@ const DisplayPets = () => {
 						paddingTop: 2,
 					}}
 				>
-					{pets && pets.length > 0 ? pets.map((pet, i) => (
-						<Grid
-							item
-							key={i}
-							xs={8}
-							sm={8}
-							md={5.5}
-							lg={5.5}
-							sx={{
-								textAlign: 'center',
-								border: '1px solid white',
-								borderRadius: '16px',
-								padding: 1,
-								'&.MuiGrid-root': { marginBottom: 1 },
-								maxHeight: '200px',
-							}}
-						>
-							<Box sx={{ display: 'flex', justifyContent: 'center', mt: 0.5 }}>
-								<PetsIcon />
-								<Typography ml={0.5} variant="body1">
-									{pet.name}
-								</Typography>
-							</Box>
-							<Box
-								sx={{ display: 'flex', justifyContent: 'center', mt: 0.5, mb: 0.5 }}
+					{pets && pets.length > 0 ? (
+						pets.map((pet, i) => (
+							<Grid
+								item
+								key={i}
+								xs={8}
+								sm={8}
+								md={5.5}
+								lg={5.5}
+								sx={{
+									textAlign: 'center',
+									border: '1px solid white',
+									borderRadius: '16px',
+									padding: 1,
+									'&.MuiGrid-root': { marginBottom: 1 },
+									maxHeight: '200px',
+								}}
 							>
-								<StraightenIcon />
-								<Typography ml={0.5} variant="body1">
-									{tamanhos[pet.size]}
-								</Typography>
-							</Box>
-							<Box sx={{ display: 'flex', justifyContent: 'center', mt: 0.5 }}>
-								<CakeIcon />
-								<Typography ml={0.5} variant="body1">
-									{dayjs(pet.birth_date).format('DD/MM/YYYY')}
-								</Typography>
-							</Box>
-						</Grid>
-					)) : (<Typography ml={0.5} variant="body1">
-						Você ainda não possui<br />nenhum pet cadastrado
-					</Typography>)}
+								<Box sx={{ display: 'flex', justifyContent: 'center', mt: 0.5 }}>
+									<PetsIcon />
+									<Typography ml={0.5} variant="body1">
+										{pet.name}
+									</Typography>
+								</Box>
+								<Box
+									sx={{ display: 'flex', justifyContent: 'center', mt: 0.5, mb: 0.5 }}
+								>
+									<StraightenIcon />
+									<Typography ml={0.5} variant="body1">
+										{tamanhos[pet.size]}
+									</Typography>
+								</Box>
+								<Box sx={{ display: 'flex', justifyContent: 'center', mt: 0.5 }}>
+									<CakeIcon />
+									<Typography ml={0.5} variant="body1">
+										{dayjs(pet.birth_date).format('DD/MM/YYYY')}
+									</Typography>
+								</Box>
+							</Grid>
+						))
+					) : (
+						<Typography ml={0.5} variant="body1">
+							Você ainda não possui
+							<br />
+							nenhum pet cadastrado
+						</Typography>
+					)}
 				</Box>
 			</Grid>
 		</Container>

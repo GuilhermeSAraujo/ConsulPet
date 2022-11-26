@@ -41,9 +41,9 @@ const encontraServico = (valor, nome) => {
 };
 
 const tamanhos = {
-	small: "Pequeno",
-	medium: "Médio",
-	large: "Grande"
-}
+	small: 'Pequeno',
+	medium: 'Médio',
+	large: 'Grande',
+};
 
 export { porte, encontraPorte, servico, encontraServico, tamanhos };

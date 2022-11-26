@@ -66,7 +66,7 @@ export default function Navbar() {
 						display="inline"
 						variant="h6"
 						color={theme.palette.primary.dark}
-						sx={{ cursor: 'pointer', ":hover": {textDecoration: 'underline'} }}
+						sx={{ cursor: 'pointer', ':hover': { textDecoration: 'underline' } }}
 						onClick={() => navigate('/pets')}
 					>
 						Pets
@@ -75,7 +75,7 @@ export default function Navbar() {
 						display="inline"
 						variant="h6"
 						color={theme.palette.primary.dark}
-						sx={{ cursor: 'pointer', ":hover": {textDecoration: 'underline'} }}
+						sx={{ cursor: 'pointer', ':hover': { textDecoration: 'underline' } }}
 						onClick={() => navigate('/home')}
 					>
 						Agendamentos

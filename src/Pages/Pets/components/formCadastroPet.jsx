@@ -11,7 +11,7 @@ import {
 	InputAdornment,
 	MenuItem,
 	Snackbar,
-	Alert
+	Alert,
 } from '@mui/material';
 import { useState } from 'react';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
@@ -29,7 +29,11 @@ import dayjs from 'dayjs';
 export default function FormCadastroPet() {
 	const theme = useTheme();
 	const [loading, setLoading] = useState(false);
-	const [toastIsOpen, setToastIsOpen] = useState({ mensagem: "", isOpen: false, severity: 'success' });
+	const [toastIsOpen, setToastIsOpen] = useState({
+		mensagem: '',
+		isOpen: false,
+		severity: 'success',
+	});
 
 	const {
 		handleSubmit,
@@ -55,14 +59,22 @@ export default function FormCadastroPet() {
 			await PetsService.cadastraPet({
 				...data,
 				birth_date: dayjs(data.birth_date).format('YYYY-MM-DD'),
-				owner_id: localStorage.getItem('user_id')
+				owner_id: localStorage.getItem('user_id'),
 			});
 			reset();
 			queryClient.invalidateQueries({ queryKey: ['pets'] });
-			setToastIsOpen({ mensagem: 'Sucesso! Seu pet foi cadastrado.', isOpen: true, severity: 'success' });
+			setToastIsOpen({
+				mensagem: 'Sucesso! Seu pet foi cadastrado.',
+				isOpen: true,
+				severity: 'success',
+			});
 			setLoading(false);
 		} catch (e) {
-			setToastIsOpen({ mensagem: 'Erro! Ocorreu um erro interno.', isOpen: true, severity: 'error' });
+			setToastIsOpen({
+				mensagem: 'Erro! Ocorreu um erro interno.',
+				isOpen: true,
+				severity: 'error',
+			});
 			setLoading(false);
 		}
 	};
@@ -82,8 +94,16 @@ export default function FormCadastroPet() {
 					alignItems: 'center',
 				}}
 			>
-				<Snackbar open={toastIsOpen.isOpen} autoHideDuration={10000} onClose={handleClose}>
-					<Alert onClose={handleClose} severity={toastIsOpen.severity} sx={{ width: '100%' }}>
+				<Snackbar
+					open={toastIsOpen.isOpen}
+					autoHideDuration={10000}
+					onClose={handleClose}
+				>
+					<Alert
+						onClose={handleClose}
+						severity={toastIsOpen.severity}
+						sx={{ width: '100%' }}
+					>
 						{toastIsOpen.mensagem}
 					</Alert>
 				</Snackbar>
