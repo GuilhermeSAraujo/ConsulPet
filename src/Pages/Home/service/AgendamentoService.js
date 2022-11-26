@@ -1,5 +1,6 @@
 import PetsRepository from '../../../Repositories/petsRepository';
 import UsersRepository from '../../../Repositories/usersRepository';
+import AgendamentoRepository from '../../../Repositories/agendamentoRepository';
 
 class AgendamentoService {
 	async buscaPets() {
@@ -21,6 +22,17 @@ class AgendamentoService {
 				throw new Error('Erro ' + response);
 			}
 		});
+	}
+	async cadastraAgendamento(data) {
+		return await AgendamentoRepository.cadastraAgendamento(data).then(
+			async (response) => {
+				if (response.ok) {
+					return await response.json();
+				} else {
+					throw new Error('Erro ' + response);
+				}
+			}
+		);
 	}
 }
 

@@ -287,7 +287,11 @@ export default function Cadastro() {
 					</LoadingButton>
 					<Grid container justifyContent="flex-end">
 						<Grid item>
-							<Typography onClick={() => history('/login')} variant="body2" sx={{ textDecoration: 'underline', cursor: 'pointer' }}>
+							<Typography
+								onClick={() => history('/login')}
+								variant="body2"
+								sx={{ textDecoration: 'underline', cursor: 'pointer' }}
+							>
 								Já possui uma conta? Entre aqui.
 							</Typography>
 						</Grid>
