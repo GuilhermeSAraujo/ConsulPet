@@ -9,5 +9,14 @@ class AgendamentoRepository {
 			},
 		});
 	}
+	async buscaAgendamentos() {
+		return await fetch('https://httpelitm.dev/api/auth/schedule', {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem('sessionToken')}`,
+			},
+		});
+	}
 }
 export default new AgendamentoRepository();
