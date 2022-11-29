@@ -22,8 +22,8 @@ import ConsulpetLogo from '../../assets/consulpetLogo.svg';
 
 export default function Navbar() {
 	const navigate = useNavigate();
-
 	const theme = useTheme();
+	const isAdmin = localStorage.getItem('admin');
 	return (
 		<AppBar position="static">
 			<CssBaseline />
@@ -61,25 +61,51 @@ export default function Navbar() {
 					textAlign="right"
 					pr={2}
 				>
-					<Typography
-						mr={5}
-						display="inline"
-						variant="h6"
-						color={theme.palette.primary.dark}
-						sx={{ cursor: 'pointer', ':hover': { textDecoration: 'underline' } }}
-						onClick={() => navigate('/pets')}
-					>
-						Pets
-					</Typography>
-					<Typography
-						display="inline"
-						variant="h6"
-						color={theme.palette.primary.dark}
-						sx={{ cursor: 'pointer', ':hover': { textDecoration: 'underline' } }}
-						onClick={() => navigate('/home')}
-					>
-						Agendamentos
-					</Typography>
+					{isAdmin === 'true' ? (
+						<>
+							<Typography
+								display="inline"
+								variant="h6"
+								color={theme.palette.primary.dark}
+								sx={{ cursor: 'pointer', ':hover': { textDecoration: 'underline' } }}
+								onClick={() => navigate('/petshop/agendamentos')}
+							>
+								Agendamentos
+							</Typography>
+							<Typography
+								mr={5}
+								display="inline"
+								variant="h6"
+								color={theme.palette.primary.dark}
+								sx={{ cursor: 'pointer', ':hover': { textDecoration: 'underline' } }}
+								onClick={() => navigate('/petshop/cadastroVeterinario')}
+							>
+								Veterinários
+							</Typography>
+						</>
+					) : (
+						<>
+							<Typography
+								mr={5}
+								display="inline"
+								variant="h6"
+								color={theme.palette.primary.dark}
+								sx={{ cursor: 'pointer', ':hover': { textDecoration: 'underline' } }}
+								onClick={() => navigate('/home')}
+							>
+								Agendamentos
+							</Typography>
+							<Typography
+								display="inline"
+								variant="h6"
+								color={theme.palette.primary.dark}
+								sx={{ cursor: 'pointer', ':hover': { textDecoration: 'underline' } }}
+								onClick={() => navigate('/pets')}
+							>
+								Pets
+							</Typography>
+						</>
+					)}
 				</Grid>
 			</Grid>
 		</AppBar>

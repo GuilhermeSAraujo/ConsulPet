@@ -19,14 +19,15 @@ import CheckIcon from '@mui/icons-material/Check';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import ScheduleIcon from '@mui/icons-material/Schedule';
+import HealingIcon from '@mui/icons-material/Healing';
+import ContentCutIcon from '@mui/icons-material/ContentCut';
 
 const DisplayAgendamentos = () => {
 	const theme = useTheme();
 
 	const { data: agendamentosCliente } = useQuery(
 		'agendamentosCliente',
-		async () => await AgendamentoService.buscaAgendamentos(),
-		{ cacheTime: 600000, staleTime: 600000 }
+		async () => await AgendamentoService.buscaAgendamentos()
 	);
 	console.log(agendamentosCliente);
 	const ordenaPorData = (lista) => {
@@ -116,12 +117,12 @@ const DisplayAgendamentos = () => {
 										{dayjs(agendamento.date).format('DD/MM/YYYY HH:mm')}
 									</Typography>
 								</Box>
-								{/* <Box sx={{ display: 'flex', justifyContent: 'center', mt: 0.5 }}>
-                                    <LocalHospitalIcon />
-                                    <Typography ml={0.5} variant="body1">
-                                        {agendamento.vet.name}
-                                    </Typography>
-                                </Box> */}
+								<Box sx={{ display: 'flex', justifyContent: 'center', mt: 0.5 }}>
+									{agendamento.vet ? <HealingIcon /> : <ContentCutIcon />}
+									<Typography ml={0.5} variant="body1">
+										{agendamento.vet ? 'Consulta' : 'Banho e tosa'}
+									</Typography>
+								</Box>
 							</Grid>
 						))
 					) : (

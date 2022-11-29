@@ -56,8 +56,10 @@ function Login() {
 			localStorage.setItem('user_id', retorno.user.id);
 			setLoading(false);
 			if (data.email === 'admin@admin.com') {
+				localStorage.setItem('admin', true);
 				navigate('/petshop/agendamentos');
 			} else {
+				localStorage.setItem('admin', false);
 				navigate('/home');
 			}
 		} catch (e) {
