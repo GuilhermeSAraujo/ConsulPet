@@ -68,7 +68,11 @@ const Agendamentos = () => {
 										<Typography variant="body1" display='inline-flex' pr={2}>
 											{a.pet.name}
 										</Typography>
-										{a.vet && a.vet.name ?}
+										{a.vet && a.vet.name ? (<Typography variant="body1" display='inline-flex' pr={2}>
+											{a.vet}
+										</Typography>) : (<Typography variant="body1" display='inline-flex' pr={2}>
+											Banho/tosa
+										</Typography>)}
 									</Box>
 								);
 							} else {
