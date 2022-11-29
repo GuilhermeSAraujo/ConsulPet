@@ -39,7 +39,9 @@ class AgendamentoService {
 			async (response) => {
 				if (response.ok) {
 					const data = await response.json();
-					return data.data.filter((agendamento) => agendamento.client.id == localStorage.getItem("user_id"));
+					return data.data.filter(
+						(agendamento) => agendamento.client.id == localStorage.getItem('user_id')
+					);
 				} else {
 					throw new Error('Erro ' + response);
 				}

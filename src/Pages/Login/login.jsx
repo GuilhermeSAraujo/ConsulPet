@@ -55,7 +55,11 @@ function Login() {
 			localStorage.setItem('sessionToken', retorno.token.access_token);
 			localStorage.setItem('user_id', retorno.user.id);
 			setLoading(false);
-			navigate('/home');
+			if (data.email === 'admin@admin.com') {
+				navigate('/petshop/agendamentos');
+			} else {
+				navigate('/home');
+			}
 		} catch (e) {
 			setToastIsOpen(true);
 			setLoading(false);

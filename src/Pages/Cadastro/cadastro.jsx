@@ -89,12 +89,7 @@ export default function Cadastro() {
 	};
 
 	return (
-		<Container
-			component="main"
-			maxWidth="xs"
-			p={0}
-			m={0}
-		>
+		<Container component="main" maxWidth="xs" p={0} m={0}>
 			<CssBaseline />
 			<Box
 				sx={{
