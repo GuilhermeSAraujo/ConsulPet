@@ -94,7 +94,6 @@ export default function Cadastro() {
 			maxWidth="xs"
 			p={0}
 			m={0}
-			sx={{ marginTop: '-9vw' }}
 		>
 			<CssBaseline />
 			<Box

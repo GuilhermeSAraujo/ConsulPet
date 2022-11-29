@@ -34,6 +34,18 @@ class AgendamentoService {
 			}
 		);
 	}
+	async buscaAgendamentos() {
+		return await AgendamentoRepository.buscaAgendamentosUsuario().then(
+			async (response) => {
+				if (response.ok) {
+					const data = await response.json();
+					return data.data.filter((agendamento) => agendamento.client.id == localStorage.getItem("user_id"));
+				} else {
+					throw new Error('Erro ' + response);
+				}
+			}
+		);
+	}
 }
 
 export default new AgendamentoService();

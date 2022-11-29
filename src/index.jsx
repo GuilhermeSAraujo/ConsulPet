@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom/client';
 import { Route, Routes, HashRouter } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Navbar from './shared/components/navbar';
-import Agenda from './Pages/Agenda/agenda';
 import Home from './Pages/Home/home';
 import Login from './Pages/Login/login';
 import Cadastro from './Pages/Cadastro/cadastro';
@@ -17,6 +16,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
+import AgendamentosCliente from './Pages/Home/agendamentosCliente';
 
 const queryClient = new QueryClient();
 const theme = createTheme({
@@ -51,9 +51,8 @@ root.render(
 							<Route path="*" element={<Login />} />
 							<Route path="/login" element={<Login />} />
 							<Route path="/cadastro" element={<Cadastro />} />
-							<Route path="/home" element={<Home />} />
+							<Route path="/home" element={<AgendamentosCliente />} />
 							<Route path="/pets" element={<Pets />} />
-							<Route path="/meusAgendamentos" element={<Agenda />} />
 							<Route path="/petshop/agendamentos" element={<Agendamentos />} />
 							<Route
 								path="/petshop/cadastroVeterinario"

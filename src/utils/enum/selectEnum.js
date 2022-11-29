@@ -46,4 +46,9 @@ const tamanhos = {
 	large: 'Grande',
 };
 
-export { porte, encontraPorte, servico, encontraServico, tamanhos };
+const status = {
+	pending: 'Pendente',
+	confirmed: 'Confirmada',
+};
+
+export { porte, encontraPorte, servico, encontraServico, tamanhos, status };
