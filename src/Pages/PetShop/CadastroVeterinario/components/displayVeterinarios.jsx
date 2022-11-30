@@ -21,8 +21,7 @@ const DisplayVeterinarios = () => {
 
 	const { data: vets } = useQuery(
 		'vetsCadastro',
-		async () => await CadastroVeterinarioService.buscarVeterinarios(),
-		{ cacheTime: 600000, staleTime: 600000 }
+		async () => await CadastroVeterinarioService.buscarVeterinarios()
 	);
 
 	return (

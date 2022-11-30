@@ -66,6 +66,7 @@ export default function Navbar() {
 							<Typography
 								display="inline"
 								variant="h6"
+								mr={5}
 								color={theme.palette.primary.dark}
 								sx={{ cursor: 'pointer', ':hover': { textDecoration: 'underline' } }}
 								onClick={() => navigate('/petshop/agendamentos')}
@@ -73,7 +74,6 @@ export default function Navbar() {
 								Agendamentos
 							</Typography>
 							<Typography
-								mr={5}
 								display="inline"
 								variant="h6"
 								color={theme.palette.primary.dark}

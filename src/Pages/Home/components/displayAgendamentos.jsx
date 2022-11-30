@@ -29,7 +29,6 @@ const DisplayAgendamentos = () => {
 		'agendamentosCliente',
 		async () => await AgendamentoService.buscaAgendamentos()
 	);
-	console.log(agendamentosCliente);
 	const ordenaPorData = (lista) => {
 		lista.sort(function (a, b) {
 			return new Date(a.date).getTime() - new Date(b.date).getTime();
