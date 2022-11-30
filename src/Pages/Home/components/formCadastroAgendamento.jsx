@@ -26,6 +26,7 @@ import dayjs from 'dayjs';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import TodayIcon from '@mui/icons-material/Today';
 import AgendamentoService from '../service/AgendamentoService';
+import { useNavigate } from 'react-router';
 
 export default function FormCadastroAgendamento() {
 	const theme = useTheme();
@@ -36,6 +37,7 @@ export default function FormCadastroAgendamento() {
 		isOpen: false,
 		severity: 'success',
 	});
+	const navigate = useNavigate();
 
 	const { data: pets } = useQuery(
 		'pets',
@@ -193,9 +195,13 @@ export default function FormCadastroAgendamento() {
 											)}
 										/>
 									) : (
+										<>
 										<Typography ml={0.5} variant="body1" textAlign="center">
 											<b>*Você ainda não possui nenhum pet cadastrado</b>
 										</Typography>
+										<Typography ml={0.5} variant="body1" textAlign="center" sx={{ cursor: 'pointer', textDecoration: 'underline' }}
+								onClick={() => navigate('/pets')}>Cadastre um clicando aqui</Typography>
+										</>
 									)}
 									{errors.user_id && <AlertaErroForm textoErro="Campo obrigatório" />}
 								</Grid>
