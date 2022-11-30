@@ -118,7 +118,7 @@ const Agendamentos = () => {
 						</Box>
 					))
 				) : (
-					<h3>Carregando...</h3>
+					<h3>{agendamentos && agendamentos.length === 0 ? "Nenhum agendamento foi cadastrado ainda" : "Carregando..."}</h3>
 				)}
 			</Grid>
 		</Container>
