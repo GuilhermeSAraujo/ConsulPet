@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/consulpet/static/css/main.5090f398.css",
-    "main.js": "/consulpet/static/js/main.8a4455fb.js",
+    "main.js": "/consulpet/static/js/main.d6eb0049.js",
     "static/media/consulpetLogo.svg": "/consulpet/static/media/consulpetLogo.e923e0e2e73d837ce7e1198029a53cd1.svg",
     "index.html": "/consulpet/index.html",
     "main.5090f398.css.map": "/consulpet/static/css/main.5090f398.css.map",
-    "main.8a4455fb.js.map": "/consulpet/static/js/main.8a4455fb.js.map"
+    "main.d6eb0049.js.map": "/consulpet/static/js/main.d6eb0049.js.map"
   },
   "entrypoints": [
     "static/css/main.5090f398.css",
-    "static/js/main.8a4455fb.js"
+    "static/js/main.d6eb0049.js"
   ]
 }
