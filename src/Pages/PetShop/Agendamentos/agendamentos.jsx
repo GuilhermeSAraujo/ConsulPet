@@ -41,6 +41,8 @@ const Agendamentos = () => {
 		let dias = [];
 		lista.forEach((data) => {
 			let apenasData = data.date.split(' ')[0];
+			console.log(dias);
+			console.log(apenasData);
 			if (!dias.includes(apenasData)) {
 				dias.push(apenasData);
 			}
@@ -52,16 +54,11 @@ const Agendamentos = () => {
 		<Container component="main" maxWidth="md" bc={theme.palette.primary.main}>
 			<CssBaseline />
 			<Grid container mt={3} textAlign="center">
-				<Modal
-					open={modalOpen}
-					onClose={() => setModalOpen(false)}
-					sx={{ border: '1px solid white', borderRadius: '10px' }}
-				>
+				<Modal open={modalOpen} onClose={() => setModalOpen(false)}>
 					<ModalAgendamento agendamento={agendamentoModal} />
 				</Modal>
 				{agendamentos && agendamentos.length > 0 ? (
 					ordenaPorData(agendamentos).map((agendamento, i) => (
-						// <Grid item xs={12} key={i * 10} marginBottom={5}>
 						<Box width="100%" mb="30px" key={i}>
 							{dayjs().format('DD/MM/YYYY') ===
 							dayjs(agendamento).format('DD/MM/YYYY') ? (
@@ -82,19 +79,18 @@ const Agendamentos = () => {
 							<Stack direction="row">
 								{agendamentos.map((a, i) => {
 									if (a.date.split(' ')[0] == agendamento) {
-										console.log(a);
 										return (
-											// <Grid key={i + 200} item xs={3} sm={3} md={3} lg={3} >
 											<>
 												<Box
 													key={i * 100}
 													sx={{
 														border: '1px solid white',
 														borderRadius: '10px',
-														width: '32%',
+														width: '30%',
 														marginInline: 'auto',
 														marginTop: 2,
 														backgroundColor: theme.palette.primary.light,
+														cursor: 'pointer',
 													}}
 													onClick={() => {
 														setAgendamentoModal(a);
